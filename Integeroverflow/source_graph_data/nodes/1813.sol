@@ -1,0 +1,5 @@
+N1 N1 NULL NULL 1 Normal
+C1 C1 Add,Add N1,N2,N3,N4 2 Core
+N2 N2 NULL C1 3 Normal
+N3 N3 NULL C1 4 Normal
+N4 N4 NULL C2 5 Normal

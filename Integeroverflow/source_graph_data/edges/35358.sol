@@ -1,0 +1,3 @@
+N1 N2 1 RG
+N2 C1 2 AC
+C1 N3 3 SU

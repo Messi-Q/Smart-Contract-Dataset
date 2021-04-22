@@ -1,0 +1,23 @@
+digraph "graph.cfg.gv" {
+	subgraph global {
+		node [fontname=Courier fontsize=30.0 rank=same shape=box]
+		block_0 [label="0: PUSH1 0x80\l2: PUSH1 0x40\l4: MSTORE \l5: PUSH1 0x4\l7: CALLDATASIZE \l8: LT \l9: PUSH2 0x41\lc: JUMPI \l"]
+		block_d [label="d: PUSH1 0x0\lf: CALLDATALOAD \l10: PUSH29 0x100000000000000000000000000000000000000000000000000000000\l2e: SWAP1 \l2f: DIV \l30: PUSH4 0xffffffff\l35: AND \l36: DUP1 \l37: PUSH4 0xd4e93292\l3c: EQ \l3d: PUSH2 0x46\l40: JUMPI \l"]
+		block_41 [label="41: JUMPDEST \l42: PUSH1 0x0\l44: DUP1 \l45: REVERT \l"]
+		block_46 [label="46: JUMPDEST \l47: PUSH2 0x4e\l4a: PUSH2 0x50\l4d: JUMP \l"]
+		block_4e [label="4e: JUMPDEST \l4f: STOP \l"]
+		block_50 [label="50: JUMPDEST \l51: PUSH1 0x1\l53: SLOAD \l54: CALLVALUE \l55: GT \l56: ISZERO \l57: PUSH2 0x128\l5a: JUMPI \l"]
+		block_5b [label="5b: PUSH1 0x0\l5d: DUP1 \l5e: SWAP1 \l5f: SLOAD \l60: SWAP1 \l61: PUSH2 0x100\l64: EXP \l65: SWAP1 \l66: DIV \l67: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\l7c: AND \l7d: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\l92: AND \l93: PUSH1 0x40\l95: MLOAD \l96: DUP1 \l97: DUP1 \l98: PUSH32 0x6c6f674576656e74282900000000000000000000000000000000000000000000\lb9: DUP2 \lba: MSTORE \lbb: POP \lbc: PUSH1 0xa\lbe: ADD \lbf: SWAP1 \lc0: POP \lc1: PUSH1 0x40\lc3: MLOAD \lc4: DUP1 \lc5: SWAP2 \lc6: SUB \lc7: SWAP1 \lc8: SHA3 \lc9: PUSH29 0x100000000000000000000000000000000000000000000000000000000\le7: SWAP1 \le8: DIV \le9: PUSH1 0x40\leb: MLOAD \lec: DUP2 \led: PUSH4 0xffffffff\lf2: AND \lf3: PUSH29 0x100000000000000000000000000000000000000000000000000000000\l111: MUL \l112: DUP2 \l113: MSTORE \l114: PUSH1 0x4\l116: ADD \l117: PUSH1 0x0\l119: PUSH1 0x40\l11b: MLOAD \l11c: DUP1 \l11d: DUP4 \l11e: SUB \l11f: DUP2 \l120: DUP7 \l121: GAS \l122: DELEGATECALL \l123: SWAP3 \l124: POP \l125: POP \l126: POP \l127: POP \l"]
+		block_128 [label="128: JUMPDEST \l129: JUMP \l"]
+		block_12a [label="12a: STOP \l"]
+	}
+	block_d -> block_41 [color=red]
+	block_d -> block_46 [color=green]
+	block_46 -> block_50 [color=blue]
+	block_50 -> block_5b [color=red]
+	block_5b -> block_128 [color=cyan]
+	block_50 -> block_128 [color=green]
+	block_128 -> block_4e [color=blue]
+	block_0 -> block_d [color=red]
+	block_0 -> block_41 [color=green]
+}

@@ -1,0 +1,26 @@
+digraph "graph.cfg.gv" {
+	subgraph global {
+		node [fontname=Courier fontsize=30.0 rank=same shape=box]
+		block_0 [label="0: PUSH1 0x80\l2: PUSH1 0x40\l4: MSTORE \l5: PUSH1 0x4\l7: CALLDATASIZE \l8: LT \l9: PUSH1 0x3f\lb: JUMPI \l"]
+		block_c [label="c: PUSH1 0x0\le: CALLDATALOAD \lf: PUSH29 0x100000000000000000000000000000000000000000000000000000000\l2d: SWAP1 \l2e: DIV \l2f: PUSH4 0xffffffff\l34: AND \l35: DUP1 \l36: PUSH4 0x10bc33c\l3b: EQ \l3c: PUSH1 0x44\l3e: JUMPI \l"]
+		block_3f [label="3f: JUMPDEST \l40: PUSH1 0x0\l42: DUP1 \l43: REVERT \l"]
+		block_44 [label="44: JUMPDEST \l45: CALLVALUE \l46: DUP1 \l47: ISZERO \l48: PUSH1 0x4f\l4a: JUMPI \l"]
+		block_4b [label="4b: PUSH1 0x0\l4d: DUP1 \l4e: REVERT \l"]
+		block_4f [label="4f: JUMPDEST \l50: POP \l51: PUSH1 0x8c\l53: PUSH1 0x4\l55: DUP1 \l56: CALLDATASIZE \l57: SUB \l58: DUP2 \l59: ADD \l5a: SWAP1 \l5b: DUP1 \l5c: DUP1 \l5d: CALLDATALOAD \l5e: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\l73: AND \l74: SWAP1 \l75: PUSH1 0x20\l77: ADD \l78: SWAP1 \l79: SWAP3 \l7a: SWAP2 \l7b: SWAP1 \l7c: DUP1 \l7d: CALLDATALOAD \l7e: SWAP1 \l7f: PUSH1 0x20\l81: ADD \l82: SWAP1 \l83: SWAP3 \l84: SWAP2 \l85: SWAP1 \l86: POP \l87: POP \l88: POP \l89: PUSH1 0xa9\l8b: JUMP \l"]
+		block_8c [label="8c: JUMPDEST \l8d: PUSH1 0x40\l8f: MLOAD \l90: DUP1 \l91: DUP4 \l92: DUP2 \l93: MSTORE \l94: PUSH1 0x20\l96: ADD \l97: DUP3 \l98: DUP2 \l99: MSTORE \l9a: PUSH1 0x20\l9c: ADD \l9d: SWAP3 \l9e: POP \l9f: POP \la0: POP \la1: PUSH1 0x40\la3: MLOAD \la4: DUP1 \la5: SWAP2 \la6: SUB \la7: SWAP1 \la8: RETURN \l"]
+		block_a9 [label="a9: JUMPDEST \laa: PUSH1 0x0\lac: PUSH1 0x20\lae: MSTORE \laf: DUP2 \lb0: PUSH1 0x0\lb2: MSTORE \lb3: PUSH1 0x40\lb5: PUSH1 0x0\lb7: SHA3 \lb8: DUP2 \lb9: DUP2 \lba: SLOAD \lbb: DUP2 \lbc: LT \lbd: ISZERO \lbe: ISZERO \lbf: PUSH1 0xc3\lc1: JUMPI \l"]
+		block_c2 [label="c2: INVALID \l"]
+		block_c3 [label="c3: JUMPDEST \lc4: SWAP1 \lc5: PUSH1 0x0\lc7: MSTORE \lc8: PUSH1 0x20\lca: PUSH1 0x0\lcc: SHA3 \lcd: SWAP1 \lce: PUSH1 0x2\ld0: MUL \ld1: ADD \ld2: PUSH1 0x0\ld4: SWAP2 \ld5: POP \ld6: SWAP2 \ld7: POP \ld8: POP \ld9: DUP1 \lda: PUSH1 0x0\ldc: ADD \ldd: SLOAD \lde: SWAP1 \ldf: DUP1 \le0: PUSH1 0x1\le2: ADD \le3: SLOAD \le4: SWAP1 \le5: POP \le6: DUP3 \le7: JUMP \l"]
+		block_e8 [label="e8: STOP \l"]
+	}
+	block_44 -> block_4f [color=green]
+	block_4f -> block_a9 [color=blue]
+	block_44 -> block_4b [color=red]
+	block_c -> block_3f [color=red]
+	block_0 -> block_c [color=red]
+	block_0 -> block_3f [color=green]
+	block_a9 -> block_c2 [color=red]
+	block_a9 -> block_c3 [color=green]
+	block_c3 -> block_8c [color=blue]
+	block_c -> block_44 [color=green]
+}

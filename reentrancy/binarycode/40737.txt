@@ -1,0 +1,26 @@
+digraph "graph.cfg.gv" {
+	subgraph global {
+		node [fontname=Courier fontsize=30.0 rank=same shape=box]
+		block_0 [label="0: PUSH1 0x80\l2: PUSH1 0x40\l4: MSTORE \l5: PUSH1 0x4\l7: CALLDATASIZE \l8: LT \l9: PUSH2 0x41\lc: JUMPI \l"]
+		block_d [label="d: PUSH1 0x0\lf: CALLDATALOAD \l10: PUSH29 0x100000000000000000000000000000000000000000000000000000000\l2e: SWAP1 \l2f: DIV \l30: PUSH4 0xffffffff\l35: AND \l36: DUP1 \l37: PUSH4 0x1b0ca26a\l3c: EQ \l3d: PUSH2 0x46\l40: JUMPI \l"]
+		block_41 [label="41: JUMPDEST \l42: PUSH1 0x0\l44: DUP1 \l45: REVERT \l"]
+		block_46 [label="46: JUMPDEST \l47: CALLVALUE \l48: DUP1 \l49: ISZERO \l4a: PUSH2 0x52\l4d: JUMPI \l"]
+		block_4e [label="4e: PUSH1 0x0\l50: DUP1 \l51: REVERT \l"]
+		block_52 [label="52: JUMPDEST \l53: POP \l54: PUSH2 0x5b\l57: PUSH2 0x5d\l5a: JUMP \l"]
+		block_5b [label="5b: JUMPDEST \l5c: STOP \l"]
+		block_5d [label="5d: JUMPDEST \l5e: PUSH1 0x0\l60: DUP1 \l61: PUSH1 0x0\l63: CALLER \l64: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\l79: AND \l7a: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\l8f: AND \l90: DUP2 \l91: MSTORE \l92: PUSH1 0x20\l94: ADD \l95: SWAP1 \l96: DUP2 \l97: MSTORE \l98: PUSH1 0x20\l9a: ADD \l9b: PUSH1 0x0\l9d: SHA3 \l9e: SLOAD \l9f: SWAP1 \la0: POP \la1: PUSH1 0x0\la3: DUP1 \la4: PUSH1 0x0\la6: CALLER \la7: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\lbc: AND \lbd: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\ld2: AND \ld3: DUP2 \ld4: MSTORE \ld5: PUSH1 0x20\ld7: ADD \ld8: SWAP1 \ld9: DUP2 \lda: MSTORE \ldb: PUSH1 0x20\ldd: ADD \lde: PUSH1 0x0\le0: SHA3 \le1: DUP2 \le2: SWAP1 \le3: SSTORE \le4: POP \le5: CALLER \le6: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\lfb: AND \lfc: DUP2 \lfd: PUSH1 0x40\lff: MLOAD \l100: PUSH1 0x0\l102: PUSH1 0x40\l104: MLOAD \l105: DUP1 \l106: DUP4 \l107: SUB \l108: DUP2 \l109: DUP6 \l10a: DUP8 \l10b: GAS \l10c: CALL \l10d: SWAP3 \l10e: POP \l10f: POP \l110: POP \l111: ISZERO \l112: ISZERO \l113: PUSH2 0x11b\l116: JUMPI \l"]
+		block_117 [label="117: PUSH1 0x0\l119: DUP1 \l11a: REVERT \l"]
+		block_11b [label="11b: JUMPDEST \l11c: POP \l11d: JUMP \l"]
+		block_11e [label="11e: STOP \l"]
+	}
+	block_5d -> block_11b [color=green]
+	block_d -> block_41 [color=red]
+	block_d -> block_46 [color=green]
+	block_0 -> block_d [color=red]
+	block_52 -> block_5d [color=blue]
+	block_11b -> block_5b [color=blue]
+	block_46 -> block_4e [color=red]
+	block_5d -> block_117 [color=red]
+	block_0 -> block_41 [color=green]
+	block_46 -> block_52 [color=green]
+}

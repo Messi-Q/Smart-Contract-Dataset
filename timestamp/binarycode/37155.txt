@@ -1,0 +1,22 @@
+digraph "graph.cfg.gv" {
+	subgraph global {
+		node [fontname=Courier fontsize=30.0 rank=same shape=box]
+		block_0 [label="0: PUSH1 0x80\l2: PUSH1 0x40\l4: MSTORE \l5: PUSH1 0x4\l7: CALLDATASIZE \l8: LT \l9: PUSH1 0x3f\lb: JUMPI \l"]
+		block_c [label="c: PUSH1 0x0\le: CALLDATALOAD \lf: PUSH29 0x100000000000000000000000000000000000000000000000000000000\l2d: SWAP1 \l2e: DIV \l2f: PUSH4 0xffffffff\l34: AND \l35: DUP1 \l36: PUSH4 0xda040c0f\l3b: EQ \l3c: PUSH1 0x44\l3e: JUMPI \l"]
+		block_3f [label="3f: JUMPDEST \l40: PUSH1 0x0\l42: DUP1 \l43: REVERT \l"]
+		block_44 [label="44: JUMPDEST \l45: CALLVALUE \l46: DUP1 \l47: ISZERO \l48: PUSH1 0x4f\l4a: JUMPI \l"]
+		block_4b [label="4b: PUSH1 0x0\l4d: DUP1 \l4e: REVERT \l"]
+		block_4f [label="4f: JUMPDEST \l50: POP \l51: PUSH1 0x56\l53: PUSH1 0x70\l55: JUMP \l"]
+		block_56 [label="56: JUMPDEST \l57: PUSH1 0x40\l59: MLOAD \l5a: DUP1 \l5b: DUP3 \l5c: ISZERO \l5d: ISZERO \l5e: ISZERO \l5f: ISZERO \l60: DUP2 \l61: MSTORE \l62: PUSH1 0x20\l64: ADD \l65: SWAP2 \l66: POP \l67: POP \l68: PUSH1 0x40\l6a: MLOAD \l6b: DUP1 \l6c: SWAP2 \l6d: SUB \l6e: SWAP1 \l6f: RETURN \l"]
+		block_70 [label="70: JUMPDEST \l71: PUSH1 0x0\l73: PUSH3 0x278d00\l77: PUSH1 0x0\l79: SLOAD \l7a: ADD \l7b: TIMESTAMP \l7c: GT \l7d: ISZERO \l7e: SWAP1 \l7f: POP \l80: SWAP1 \l81: JUMP \l"]
+		block_82 [label="82: STOP \l"]
+	}
+	block_44 -> block_4f [color=green]
+	block_44 -> block_4b [color=red]
+	block_c -> block_3f [color=red]
+	block_0 -> block_c [color=red]
+	block_4f -> block_70 [color=blue]
+	block_70 -> block_56 [color=blue]
+	block_0 -> block_3f [color=green]
+	block_c -> block_44 [color=green]
+}

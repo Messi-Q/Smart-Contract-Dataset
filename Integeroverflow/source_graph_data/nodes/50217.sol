@@ -1,0 +1,7 @@
+N1 N1 NULL NULL 1 Normal
+N2 N2 NULL N1,N3 2 Normal
+N3 N3 NULL N2 3 Normal
+N4 N4 NULL N2,N5 4 Normal
+N5 N5 NULL N4 5 Normal
+N6 N6 NULL N5,N4 6 Normal
+N7 N7 NULL N6 7 Normal

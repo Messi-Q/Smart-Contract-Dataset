@@ -1,0 +1,4 @@
+N1 N2 1 IT
+N2 C1 2 RG
+N2 N3 3 RG
+C1 N3 4 AG

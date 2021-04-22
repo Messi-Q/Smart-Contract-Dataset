@@ -1,0 +1,7 @@
+digraph "graph.cfg.gv" {
+	subgraph global {
+		node [fontname=Courier fontsize=30.0 rank=same shape=box]
+		block_0 [label="0: PUSH1 0x80\l2: PUSH1 0x40\l4: MSTORE \l5: PUSH1 0x0\l7: DUP1 \l8: REVERT \l"]
+		block_9 [label="9: STOP \l"]
+	}
+}

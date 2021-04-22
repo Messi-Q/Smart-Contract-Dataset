@@ -1,0 +1,18 @@
+digraph "graph.cfg.gv" {
+	subgraph global {
+		node [fontname=Courier fontsize=30.0 rank=same shape=box]
+		block_0 [label="0: PUSH1 0x80\l2: PUSH1 0x40\l4: MSTORE \l5: PUSH1 0x4\l7: CALLDATASIZE \l8: LT \l9: PUSH2 0x41\lc: JUMPI \l"]
+		block_d [label="d: PUSH1 0x0\lf: CALLDATALOAD \l10: PUSH29 0x100000000000000000000000000000000000000000000000000000000\l2e: SWAP1 \l2f: DIV \l30: PUSH4 0xffffffff\l35: AND \l36: DUP1 \l37: PUSH4 0x9f00828d\l3c: EQ \l3d: PUSH2 0x46\l40: JUMPI \l"]
+		block_41 [label="41: JUMPDEST \l42: PUSH1 0x0\l44: DUP1 \l45: REVERT \l"]
+		block_46 [label="46: JUMPDEST \l47: PUSH2 0x7a\l4a: PUSH1 0x4\l4c: DUP1 \l4d: CALLDATASIZE \l4e: SUB \l4f: DUP2 \l50: ADD \l51: SWAP1 \l52: DUP1 \l53: DUP1 \l54: CALLDATALOAD \l55: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\l6a: AND \l6b: SWAP1 \l6c: PUSH1 0x20\l6e: ADD \l6f: SWAP1 \l70: SWAP3 \l71: SWAP2 \l72: SWAP1 \l73: POP \l74: POP \l75: POP \l76: PUSH2 0x7c\l79: JUMP \l"]
+		block_7a [label="7a: JUMPDEST \l7b: STOP \l"]
+		block_7c [label="7c: JUMPDEST \l7d: DUP1 \l7e: PUSH1 0x0\l80: DUP1 \l81: PUSH2 0x100\l84: EXP \l85: DUP2 \l86: SLOAD \l87: DUP2 \l88: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\l9d: MUL \l9e: NOT \l9f: AND \la0: SWAP1 \la1: DUP4 \la2: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\lb7: AND \lb8: MUL \lb9: OR \lba: SWAP1 \lbb: SSTORE \lbc: POP \lbd: PUSH1 0x0\lbf: DUP1 \lc0: SWAP1 \lc1: SLOAD \lc2: SWAP1 \lc3: PUSH2 0x100\lc6: EXP \lc7: SWAP1 \lc8: DIV \lc9: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\lde: AND \ldf: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\lf4: AND \lf5: PUSH1 0x0\lf7: CALLDATASIZE \lf8: PUSH1 0x40\lfa: MLOAD \lfb: DUP1 \lfc: DUP4 \lfd: DUP4 \lfe: DUP1 \lff: DUP3 \l100: DUP5 \l101: CALLDATACOPY \l102: DUP3 \l103: ADD \l104: SWAP2 \l105: POP \l106: POP \l107: SWAP3 \l108: POP \l109: POP \l10a: POP \l10b: PUSH1 0x0\l10d: PUSH1 0x40\l10f: MLOAD \l110: DUP1 \l111: DUP4 \l112: SUB \l113: DUP2 \l114: DUP6 \l115: GAS \l116: DELEGATECALL \l117: SWAP2 \l118: POP \l119: POP \l11a: POP \l11b: POP \l11c: JUMP \l"]
+		block_11d [label="11d: STOP \l"]
+	}
+	block_d -> block_41 [color=red]
+	block_d -> block_46 [color=green]
+	block_7c -> block_7a [color=blue]
+	block_46 -> block_7c [color=blue]
+	block_0 -> block_d [color=red]
+	block_0 -> block_41 [color=green]
+}

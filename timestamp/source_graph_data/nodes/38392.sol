@@ -1,0 +1,3 @@
+N1 N1 NULL 1 Normal
+N2 N2 N1,N2 2 Normal
+C1 C1 N1 3 CoreTime

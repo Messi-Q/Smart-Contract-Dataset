@@ -1,0 +1,4 @@
+N1 N2 1 GB
+N2 C1 2 AC
+C1 C2 3 AC
+C2 N2 4 AC

@@ -1,0 +1,6 @@
+block_d -> block_41 [color=red]
+block_d -> block_46 [color=green]
+block_c0 -> block_a6 [color=blue]
+block_0 -> block_d [color=red]
+block_0 -> block_41 [color=green]
+block_46 -> block_c0 [color=blue]

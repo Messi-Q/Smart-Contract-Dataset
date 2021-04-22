@@ -1,0 +1,26 @@
+digraph "graph.cfg.gv" {
+	subgraph global {
+		node [fontname=Courier fontsize=30.0 rank=same shape=box]
+		block_0 [label="0: PUSH1 0x80\l2: PUSH1 0x40\l4: MSTORE \l5: PUSH1 0x4\l7: CALLDATASIZE \l8: LT \l9: PUSH1 0x3f\lb: JUMPI \l"]
+		block_c [label="c: PUSH1 0x0\le: CALLDATALOAD \lf: PUSH29 0x100000000000000000000000000000000000000000000000000000000\l2d: SWAP1 \l2e: DIV \l2f: PUSH4 0xffffffff\l34: AND \l35: DUP1 \l36: PUSH4 0x43a68e63\l3b: EQ \l3c: PUSH1 0x44\l3e: JUMPI \l"]
+		block_3f [label="3f: JUMPDEST \l40: PUSH1 0x0\l42: DUP1 \l43: REVERT \l"]
+		block_44 [label="44: JUMPDEST \l45: PUSH1 0x4a\l47: PUSH1 0x60\l49: JUMP \l"]
+		block_4a [label="4a: JUMPDEST \l4b: PUSH1 0x40\l4d: MLOAD \l4e: DUP1 \l4f: DUP3 \l50: DUP2 \l51: MSTORE \l52: PUSH1 0x20\l54: ADD \l55: SWAP2 \l56: POP \l57: POP \l58: PUSH1 0x40\l5a: MLOAD \l5b: DUP1 \l5c: SWAP2 \l5d: SUB \l5e: SWAP1 \l5f: RETURN \l"]
+		block_60 [label="60: JUMPDEST \l61: PUSH1 0x0\l63: PUSH1 0x68\l65: PUSH1 0xac\l67: JUMP \l"]
+		block_68 [label="68: JUMPDEST \l69: TIMESTAMP \l6a: DUP2 \l6b: PUSH1 0x0\l6d: ADD \l6e: DUP2 \l6f: DUP2 \l70: MSTORE \l71: POP \l72: POP \l73: DUP1 \l74: PUSH1 0x0\l76: PUSH1 0xa\l78: SLOAD \l79: PUSH1 0xa\l7b: DUP2 \l7c: LT \l7d: ISZERO \l7e: ISZERO \l7f: PUSH1 0x83\l81: JUMPI \l"]
+		block_82 [label="82: INVALID \l"]
+		block_83 [label="83: JUMPDEST \l84: ADD \l85: PUSH1 0x0\l87: DUP3 \l88: ADD \l89: MLOAD \l8a: DUP2 \l8b: PUSH1 0x0\l8d: ADD \l8e: SSTORE \l8f: SWAP1 \l90: POP \l91: POP \l92: PUSH1 0xa\l94: PUSH1 0x0\l96: DUP2 \l97: SLOAD \l98: DUP1 \l99: SWAP3 \l9a: SWAP2 \l9b: SWAP1 \l9c: PUSH1 0x1\l9e: ADD \l9f: SWAP2 \la0: SWAP1 \la1: POP \la2: SSTORE \la3: POP \la4: PUSH1 0xa\la6: SLOAD \la7: SWAP2 \la8: POP \la9: POP \laa: SWAP1 \lab: JUMP \l"]
+		block_ac [label="ac: JUMPDEST \lad: PUSH1 0x20\laf: PUSH1 0x40\lb1: MLOAD \lb2: SWAP1 \lb3: DUP2 \lb4: ADD \lb5: PUSH1 0x40\lb7: MSTORE \lb8: DUP1 \lb9: PUSH1 0x0\lbb: DUP2 \lbc: MSTORE \lbd: POP \lbe: SWAP1 \lbf: JUMP \l"]
+		block_c0 [label="c0: STOP \l"]
+	}
+	block_83 -> block_4a [color=blue]
+	block_68 -> block_82 [color=red]
+	block_c -> block_3f [color=red]
+	block_60 -> block_ac [color=blue]
+	block_0 -> block_c [color=red]
+	block_ac -> block_68 [color=blue]
+	block_0 -> block_3f [color=green]
+	block_68 -> block_83 [color=green]
+	block_44 -> block_60 [color=blue]
+	block_c -> block_44 [color=green]
+}

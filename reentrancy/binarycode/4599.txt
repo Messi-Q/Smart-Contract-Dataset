@@ -1,0 +1,26 @@
+digraph "graph.cfg.gv" {
+	subgraph global {
+		node [fontname=Courier fontsize=30.0 rank=same shape=box]
+		block_0 [label="0: PUSH1 0x80\l2: PUSH1 0x40\l4: MSTORE \l5: PUSH1 0x4\l7: CALLDATASIZE \l8: LT \l9: PUSH2 0x41\lc: JUMPI \l"]
+		block_d [label="d: PUSH1 0x0\lf: CALLDATALOAD \l10: PUSH29 0x100000000000000000000000000000000000000000000000000000000\l2e: SWAP1 \l2f: DIV \l30: PUSH4 0xffffffff\l35: AND \l36: DUP1 \l37: PUSH4 0x76098303\l3c: EQ \l3d: PUSH2 0x46\l40: JUMPI \l"]
+		block_41 [label="41: JUMPDEST \l42: PUSH1 0x0\l44: DUP1 \l45: REVERT \l"]
+		block_46 [label="46: JUMPDEST \l47: PUSH2 0x4e\l4a: PUSH2 0x50\l4d: JUMP \l"]
+		block_4e [label="4e: JUMPDEST \l4f: STOP \l"]
+		block_50 [label="50: JUMPDEST \l51: PUSH1 0x1\l53: PUSH1 0x0\l55: SWAP1 \l56: SLOAD \l57: SWAP1 \l58: PUSH2 0x100\l5b: EXP \l5c: SWAP1 \l5d: DIV \l5e: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\l73: AND \l74: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\l89: AND \l8a: CALLER \l8b: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\la0: AND \la1: EQ \la2: ISZERO \la3: ISZERO \la4: PUSH2 0xac\la7: JUMPI \l"]
+		block_a8 [label="a8: PUSH1 0x0\laa: DUP1 \lab: REVERT \l"]
+		block_ac [label="ac: JUMPDEST \lad: PUSH1 0x0\laf: DUP1 \lb0: SWAP1 \lb1: SLOAD \lb2: SWAP1 \lb3: PUSH2 0x100\lb6: EXP \lb7: SWAP1 \lb8: DIV \lb9: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\lce: AND \lcf: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\le4: AND \le5: CALLVALUE \le6: PUSH1 0x40\le8: MLOAD \le9: PUSH1 0x0\leb: PUSH1 0x40\led: MLOAD \lee: DUP1 \lef: DUP4 \lf0: SUB \lf1: DUP2 \lf2: DUP6 \lf3: DUP8 \lf4: GAS \lf5: CALL \lf6: SWAP3 \lf7: POP \lf8: POP \lf9: POP \lfa: ISZERO \lfb: ISZERO \lfc: PUSH2 0x104\lff: JUMPI \l"]
+		block_100 [label="100: PUSH1 0x0\l102: DUP1 \l103: REVERT \l"]
+		block_104 [label="104: JUMPDEST \l105: JUMP \l"]
+		block_106 [label="106: STOP \l"]
+	}
+	block_d -> block_41 [color=red]
+	block_d -> block_46 [color=green]
+	block_0 -> block_d [color=red]
+	block_ac -> block_104 [color=green]
+	block_ac -> block_100 [color=red]
+	block_0 -> block_41 [color=green]
+	block_46 -> block_50 [color=blue]
+	block_50 -> block_a8 [color=red]
+	block_50 -> block_ac [color=green]
+	block_104 -> block_4e [color=blue]
+}

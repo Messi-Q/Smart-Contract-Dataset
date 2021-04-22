@@ -1,0 +1,4 @@
+N1 N2 1 AH
+N1 N3 2 AH
+N2 N3 3 AG
+N3 N3 4 RE

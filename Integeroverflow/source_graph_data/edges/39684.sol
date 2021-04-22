@@ -1,0 +1,3 @@
+N1 N2 1 IF
+N2 N3 2 IT
+N3 N4 3 AC

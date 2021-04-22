@@ -1,0 +1,21 @@
+digraph "graph.cfg.gv" {
+	subgraph global {
+		node [fontname=Courier fontsize=30.0 rank=same shape=box]
+		block_0 [label="0: PUSH1 0x80\l2: PUSH1 0x40\l4: MSTORE \l5: PUSH1 0x4\l7: CALLDATASIZE \l8: LT \l9: PUSH1 0x3f\lb: JUMPI \l"]
+		block_c [label="c: PUSH1 0x0\le: CALLDATALOAD \lf: PUSH29 0x100000000000000000000000000000000000000000000000000000000\l2d: SWAP1 \l2e: DIV \l2f: PUSH4 0xffffffff\l34: AND \l35: DUP1 \l36: PUSH4 0xa6f2ae3a\l3b: EQ \l3c: PUSH1 0x44\l3e: JUMPI \l"]
+		block_3f [label="3f: JUMPDEST \l40: PUSH1 0x0\l42: DUP1 \l43: REVERT \l"]
+		block_44 [label="44: JUMPDEST \l45: PUSH1 0x4a\l47: PUSH1 0x4c\l49: JUMP \l"]
+		block_4a [label="4a: JUMPDEST \l4b: STOP \l"]
+		block_4c [label="4c: JUMPDEST \l4d: PUSH1 0x0\l4f: PUSH1 0x40\l51: MLOAD \l52: PUSH1 0x0\l54: DUP2 \l55: CALLDATASIZE \l56: DUP4 \l57: DUP6 \l58: GAS \l59: DELEGATECALL \l5a: DUP1 \l5b: PUSH1 0x0\l5d: DUP2 \l5e: EQ \l5f: PUSH1 0x66\l61: JUMPI \l"]
+		block_62 [label="62: PUSH1 0x0\l64: DUP4 \l65: RETURN \l"]
+		block_66 [label="66: JUMPDEST \l67: PUSH1 0x0\l69: DUP1 \l6a: REVERT \l"]
+		block_6b [label="6b: STOP \l"]
+	}
+	block_4c -> block_66 [color=green]
+	block_0 -> block_c [color=red]
+	block_0 -> block_3f [color=green]
+	block_44 -> block_4c [color=blue]
+	block_c -> block_44 [color=green]
+	block_4c -> block_62 [color=red]
+	block_c -> block_3f [color=red]
+}

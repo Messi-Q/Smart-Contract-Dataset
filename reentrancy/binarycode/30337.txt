@@ -1,0 +1,26 @@
+digraph "graph.cfg.gv" {
+	subgraph global {
+		node [fontname=Courier fontsize=30.0 rank=same shape=box]
+		block_0 [label="0: PUSH1 0x80\l2: PUSH1 0x40\l4: MSTORE \l5: PUSH1 0x4\l7: CALLDATASIZE \l8: LT \l9: PUSH2 0x41\lc: JUMPI \l"]
+		block_d [label="d: PUSH1 0x0\lf: CALLDATALOAD \l10: PUSH29 0x100000000000000000000000000000000000000000000000000000000\l2e: SWAP1 \l2f: DIV \l30: PUSH4 0xffffffff\l35: AND \l36: DUP1 \l37: PUSH4 0x6103d70b\l3c: EQ \l3d: PUSH2 0x46\l40: JUMPI \l"]
+		block_41 [label="41: JUMPDEST \l42: PUSH1 0x0\l44: DUP1 \l45: REVERT \l"]
+		block_46 [label="46: JUMPDEST \l47: CALLVALUE \l48: DUP1 \l49: ISZERO \l4a: PUSH2 0x52\l4d: JUMPI \l"]
+		block_4e [label="4e: PUSH1 0x0\l50: DUP1 \l51: REVERT \l"]
+		block_52 [label="52: JUMPDEST \l53: POP \l54: PUSH2 0x5b\l57: PUSH2 0x75\l5a: JUMP \l"]
+		block_5b [label="5b: JUMPDEST \l5c: PUSH1 0x40\l5e: MLOAD \l5f: DUP1 \l60: DUP3 \l61: ISZERO \l62: ISZERO \l63: ISZERO \l64: ISZERO \l65: DUP2 \l66: MSTORE \l67: PUSH1 0x20\l69: ADD \l6a: SWAP2 \l6b: POP \l6c: POP \l6d: PUSH1 0x40\l6f: MLOAD \l70: DUP1 \l71: SWAP2 \l72: SUB \l73: SWAP1 \l74: RETURN \l"]
+		block_75 [label="75: JUMPDEST \l76: PUSH1 0x0\l78: DUP1 \l79: PUSH1 0x0\l7b: DUP1 \l7c: CALLER \l7d: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\l92: AND \l93: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\la8: AND \la9: DUP2 \laa: MSTORE \lab: PUSH1 0x20\lad: ADD \lae: SWAP1 \laf: DUP2 \lb0: MSTORE \lb1: PUSH1 0x20\lb3: ADD \lb4: PUSH1 0x0\lb6: SHA3 \lb7: SLOAD \lb8: SWAP1 \lb9: POP \lba: PUSH1 0x0\lbc: DUP1 \lbd: PUSH1 0x0\lbf: CALLER \lc0: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\ld5: AND \ld6: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\leb: AND \lec: DUP2 \led: MSTORE \lee: PUSH1 0x20\lf0: ADD \lf1: SWAP1 \lf2: DUP2 \lf3: MSTORE \lf4: PUSH1 0x20\lf6: ADD \lf7: PUSH1 0x0\lf9: SHA3 \lfa: DUP2 \lfb: SWAP1 \lfc: SSTORE \lfd: POP \lfe: CALLER \lff: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\l114: AND \l115: DUP2 \l116: PUSH1 0x40\l118: MLOAD \l119: PUSH1 0x0\l11b: PUSH1 0x40\l11d: MLOAD \l11e: DUP1 \l11f: DUP4 \l120: SUB \l121: DUP2 \l122: DUP6 \l123: DUP8 \l124: GAS \l125: CALL \l126: SWAP3 \l127: POP \l128: POP \l129: POP \l12a: ISZERO \l12b: ISZERO \l12c: PUSH2 0x134\l12f: JUMPI \l"]
+		block_130 [label="130: PUSH1 0x0\l132: DUP1 \l133: REVERT \l"]
+		block_134 [label="134: JUMPDEST \l135: PUSH1 0x1\l137: SWAP2 \l138: POP \l139: POP \l13a: SWAP1 \l13b: JUMP \l"]
+		block_13c [label="13c: STOP \l"]
+	}
+	block_d -> block_41 [color=red]
+	block_d -> block_46 [color=green]
+	block_0 -> block_d [color=red]
+	block_46 -> block_4e [color=red]
+	block_75 -> block_130 [color=red]
+	block_0 -> block_41 [color=green]
+	block_134 -> block_5b [color=blue]
+	block_46 -> block_52 [color=green]
+	block_52 -> block_75 [color=blue]
+	block_75 -> block_134 [color=green]
+}

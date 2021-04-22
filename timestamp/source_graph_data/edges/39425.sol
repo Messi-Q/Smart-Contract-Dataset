@@ -1,0 +1,4 @@
+N1 N2 1 IF
+N2 C1 2 IF
+C1 C1 3 AC
+C1 C2 4 AG

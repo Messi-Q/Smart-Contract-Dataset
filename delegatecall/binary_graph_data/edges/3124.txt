@@ -1,0 +1,6 @@
+block_4c -> block_4a [color=blue]
+block_c -> block_3f [color=red]
+block_c -> block_44 [color=green]
+block_0 -> block_c [color=red]
+block_44 -> block_4c [color=blue]
+block_0 -> block_3f [color=green]

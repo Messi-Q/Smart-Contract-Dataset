@@ -1,0 +1,26 @@
+digraph "graph.cfg.gv" {
+	subgraph global {
+		node [fontname=Courier fontsize=30.0 rank=same shape=box]
+		block_0 [label="0: PUSH1 0x80\l2: PUSH1 0x40\l4: MSTORE \l5: PUSH1 0x4\l7: CALLDATASIZE \l8: LT \l9: PUSH1 0x3f\lb: JUMPI \l"]
+		block_c [label="c: PUSH1 0x0\le: CALLDATALOAD \lf: PUSH29 0x100000000000000000000000000000000000000000000000000000000\l2d: SWAP1 \l2e: DIV \l2f: PUSH4 0xffffffff\l34: AND \l35: DUP1 \l36: PUSH4 0x40517083\l3b: EQ \l3c: PUSH1 0x44\l3e: JUMPI \l"]
+		block_3f [label="3f: JUMPDEST \l40: PUSH1 0x0\l42: DUP1 \l43: REVERT \l"]
+		block_44 [label="44: JUMPDEST \l45: CALLVALUE \l46: DUP1 \l47: ISZERO \l48: PUSH1 0x4f\l4a: JUMPI \l"]
+		block_4b [label="4b: PUSH1 0x0\l4d: DUP1 \l4e: REVERT \l"]
+		block_4f [label="4f: JUMPDEST \l50: POP \l51: PUSH1 0x6c\l53: PUSH1 0x4\l55: DUP1 \l56: CALLDATASIZE \l57: SUB \l58: DUP2 \l59: ADD \l5a: SWAP1 \l5b: DUP1 \l5c: DUP1 \l5d: CALLDATALOAD \l5e: SWAP1 \l5f: PUSH1 0x20\l61: ADD \l62: SWAP1 \l63: SWAP3 \l64: SWAP2 \l65: SWAP1 \l66: POP \l67: POP \l68: POP \l69: PUSH1 0x6e\l6b: JUMP \l"]
+		block_6c [label="6c: JUMPDEST \l6d: STOP \l"]
+		block_6e [label="6e: JUMPDEST \l6f: ADDRESS \l70: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\l85: AND \l86: PUSH4 0x21835af6\l8b: PUSH1 0x1\l8d: DUP4 \l8e: SUB \l8f: PUSH1 0x40\l91: MLOAD \l92: DUP3 \l93: PUSH4 0xffffffff\l98: AND \l99: PUSH29 0x100000000000000000000000000000000000000000000000000000000\lb7: MUL \lb8: DUP2 \lb9: MSTORE \lba: PUSH1 0x4\lbc: ADD \lbd: DUP1 \lbe: DUP3 \lbf: DUP2 \lc0: MSTORE \lc1: PUSH1 0x20\lc3: ADD \lc4: SWAP2 \lc5: POP \lc6: POP \lc7: PUSH1 0x0\lc9: PUSH1 0x40\lcb: MLOAD \lcc: DUP1 \lcd: DUP4 \lce: SUB \lcf: DUP2 \ld0: DUP7 \ld1: GAS \ld2: DELEGATECALL \ld3: SWAP3 \ld4: POP \ld5: POP \ld6: POP \ld7: ISZERO \ld8: ISZERO \ld9: PUSH1 0xe0\ldb: JUMPI \l"]
+		block_dc [label="dc: PUSH1 0x0\lde: DUP1 \ldf: REVERT \l"]
+		block_e0 [label="e0: JUMPDEST \le1: POP \le2: JUMP \l"]
+		block_e3 [label="e3: STOP \l"]
+	}
+	block_44 -> block_4b [color=red]
+	block_c -> block_3f [color=red]
+	block_c -> block_44 [color=green]
+	block_44 -> block_4f [color=green]
+	block_6e -> block_e0 [color=green]
+	block_0 -> block_c [color=red]
+	block_0 -> block_3f [color=green]
+	block_6e -> block_dc [color=red]
+	block_4f -> block_6e [color=blue]
+	block_e0 -> block_6c [color=blue]
+}

@@ -1,0 +1,22 @@
+digraph "graph.cfg.gv" {
+	subgraph global {
+		node [fontname=Courier fontsize=30.0 rank=same shape=box]
+		block_0 [label="0: PUSH1 0x80\l2: PUSH1 0x40\l4: MSTORE \l5: PUSH1 0x4\l7: CALLDATASIZE \l8: LT \l9: PUSH1 0x3f\lb: JUMPI \l"]
+		block_c [label="c: PUSH1 0x0\le: CALLDATALOAD \lf: PUSH29 0x100000000000000000000000000000000000000000000000000000000\l2d: SWAP1 \l2e: DIV \l2f: PUSH4 0xffffffff\l34: AND \l35: DUP1 \l36: PUSH4 0x6d6a3f41\l3b: EQ \l3c: PUSH1 0x44\l3e: JUMPI \l"]
+		block_3f [label="3f: JUMPDEST \l40: PUSH1 0x0\l42: DUP1 \l43: REVERT \l"]
+		block_44 [label="44: JUMPDEST \l45: PUSH1 0x80\l47: PUSH1 0x4\l49: DUP1 \l4a: CALLDATASIZE \l4b: SUB \l4c: DUP2 \l4d: ADD \l4e: SWAP1 \l4f: DUP1 \l50: DUP1 \l51: CALLDATALOAD \l52: SWAP1 \l53: PUSH1 0x20\l55: ADD \l56: SWAP1 \l57: SWAP3 \l58: SWAP2 \l59: SWAP1 \l5a: DUP1 \l5b: CALLDATALOAD \l5c: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\l71: AND \l72: SWAP1 \l73: PUSH1 0x20\l75: ADD \l76: SWAP1 \l77: SWAP3 \l78: SWAP2 \l79: SWAP1 \l7a: POP \l7b: POP \l7c: POP \l7d: PUSH1 0x82\l7f: JUMP \l"]
+		block_80 [label="80: JUMPDEST \l81: STOP \l"]
+		block_82 [label="82: JUMPDEST \l83: DUP1 \l84: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\l99: AND \l9a: DUP3 \l9b: PUSH1 0x40\l9d: MLOAD \l9e: PUSH1 0x0\la0: PUSH1 0x40\la2: MLOAD \la3: DUP1 \la4: DUP4 \la5: SUB \la6: DUP2 \la7: DUP6 \la8: DUP8 \la9: GAS \laa: CALL \lab: SWAP3 \lac: POP \lad: POP \lae: POP \laf: ISZERO \lb0: ISZERO \lb1: PUSH1 0xb8\lb3: JUMPI \l"]
+		block_b4 [label="b4: PUSH1 0x0\lb6: DUP1 \lb7: REVERT \l"]
+		block_b8 [label="b8: JUMPDEST \lb9: POP \lba: POP \lbb: JUMP \l"]
+		block_bc [label="bc: STOP \l"]
+	}
+	block_82 -> block_b4 [color=red]
+	block_c -> block_3f [color=red]
+	block_44 -> block_82 [color=blue]
+	block_0 -> block_c [color=red]
+	block_c -> block_44 [color=green]
+	block_82 -> block_b8 [color=green]
+	block_b8 -> block_80 [color=blue]
+	block_0 -> block_3f [color=green]
+}

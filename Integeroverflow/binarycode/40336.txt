@@ -1,0 +1,26 @@
+digraph "graph.cfg.gv" {
+	subgraph global {
+		node [fontname=Courier fontsize=30.0 rank=same shape=box]
+		block_0 [label="0: PUSH1 0x80\l2: PUSH1 0x40\l4: MSTORE \l5: PUSH1 0x4\l7: CALLDATASIZE \l8: LT \l9: PUSH2 0x41\lc: JUMPI \l"]
+		block_d [label="d: PUSH1 0x0\lf: CALLDATALOAD \l10: PUSH29 0x100000000000000000000000000000000000000000000000000000000\l2e: SWAP1 \l2f: DIV \l30: PUSH4 0xffffffff\l35: AND \l36: DUP1 \l37: PUSH4 0x2e1a7d4d\l3c: EQ \l3d: PUSH2 0x46\l40: JUMPI \l"]
+		block_41 [label="41: JUMPDEST \l42: PUSH1 0x0\l44: DUP1 \l45: REVERT \l"]
+		block_46 [label="46: JUMPDEST \l47: CALLVALUE \l48: DUP1 \l49: ISZERO \l4a: PUSH2 0x52\l4d: JUMPI \l"]
+		block_4e [label="4e: PUSH1 0x0\l50: DUP1 \l51: REVERT \l"]
+		block_52 [label="52: JUMPDEST \l53: POP \l54: PUSH2 0x71\l57: PUSH1 0x4\l59: DUP1 \l5a: CALLDATASIZE \l5b: SUB \l5c: DUP2 \l5d: ADD \l5e: SWAP1 \l5f: DUP1 \l60: DUP1 \l61: CALLDATALOAD \l62: SWAP1 \l63: PUSH1 0x20\l65: ADD \l66: SWAP1 \l67: SWAP3 \l68: SWAP2 \l69: SWAP1 \l6a: POP \l6b: POP \l6c: POP \l6d: PUSH2 0x73\l70: JUMP \l"]
+		block_71 [label="71: JUMPDEST \l72: STOP \l"]
+		block_73 [label="73: JUMPDEST \l74: DUP1 \l75: PUSH1 0x0\l77: DUP1 \l78: DUP1 \l79: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\l8e: AND \l8f: DUP2 \l90: MSTORE \l91: PUSH1 0x20\l93: ADD \l94: SWAP1 \l95: DUP2 \l96: MSTORE \l97: PUSH1 0x20\l99: ADD \l9a: PUSH1 0x0\l9c: SHA3 \l9d: PUSH1 0x0\l9f: CALLER \la0: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\lb5: AND \lb6: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\lcb: AND \lcc: DUP2 \lcd: MSTORE \lce: PUSH1 0x20\ld0: ADD \ld1: SWAP1 \ld2: DUP2 \ld3: MSTORE \ld4: PUSH1 0x20\ld6: ADD \ld7: PUSH1 0x0\ld9: SHA3 \lda: SLOAD \ldb: SUB \ldc: PUSH1 0x0\lde: DUP1 \ldf: DUP1 \le0: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\lf5: AND \lf6: DUP2 \lf7: MSTORE \lf8: PUSH1 0x20\lfa: ADD \lfb: SWAP1 \lfc: DUP2 \lfd: MSTORE \lfe: PUSH1 0x20\l100: ADD \l101: PUSH1 0x0\l103: SHA3 \l104: PUSH1 0x0\l106: CALLER \l107: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\l11c: AND \l11d: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\l132: AND \l133: DUP2 \l134: MSTORE \l135: PUSH1 0x20\l137: ADD \l138: SWAP1 \l139: DUP2 \l13a: MSTORE \l13b: PUSH1 0x20\l13d: ADD \l13e: PUSH1 0x0\l140: SHA3 \l141: DUP2 \l142: SWAP1 \l143: SSTORE \l144: POP \l145: CALLER \l146: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\l15b: AND \l15c: DUP2 \l15d: PUSH1 0x40\l15f: MLOAD \l160: PUSH1 0x0\l162: PUSH1 0x40\l164: MLOAD \l165: DUP1 \l166: DUP4 \l167: SUB \l168: DUP2 \l169: DUP6 \l16a: DUP8 \l16b: GAS \l16c: CALL \l16d: SWAP3 \l16e: POP \l16f: POP \l170: POP \l171: ISZERO \l172: ISZERO \l173: PUSH2 0x17b\l176: JUMPI \l"]
+		block_177 [label="177: PUSH1 0x0\l179: DUP1 \l17a: REVERT \l"]
+		block_17b [label="17b: JUMPDEST \l17c: POP \l17d: JUMP \l"]
+		block_17e [label="17e: STOP \l"]
+	}
+	block_73 -> block_17b [color=green]
+	block_0 -> block_41 [color=green]
+	block_d -> block_41 [color=red]
+	block_52 -> block_73 [color=blue]
+	block_d -> block_46 [color=green]
+	block_17b -> block_71 [color=blue]
+	block_0 -> block_d [color=red]
+	block_73 -> block_177 [color=red]
+	block_46 -> block_52 [color=green]
+	block_46 -> block_4e [color=red]
+}

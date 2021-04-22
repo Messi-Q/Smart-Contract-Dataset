@@ -1,0 +1,22 @@
+digraph "graph.cfg.gv" {
+	subgraph global {
+		node [fontname=Courier fontsize=30.0 rank=same shape=box]
+		block_0 [label="0: PUSH1 0x80\l2: PUSH1 0x40\l4: MSTORE \l5: PUSH1 0x4\l7: CALLDATASIZE \l8: LT \l9: PUSH1 0x3f\lb: JUMPI \l"]
+		block_c [label="c: PUSH1 0x0\le: CALLDATALOAD \lf: PUSH29 0x100000000000000000000000000000000000000000000000000000000\l2d: SWAP1 \l2e: DIV \l2f: PUSH4 0xffffffff\l34: AND \l35: DUP1 \l36: PUSH4 0xf0c6923f\l3b: EQ \l3c: PUSH1 0x44\l3e: JUMPI \l"]
+		block_3f [label="3f: JUMPDEST \l40: PUSH1 0x0\l42: DUP1 \l43: REVERT \l"]
+		block_44 [label="44: JUMPDEST \l45: CALLVALUE \l46: DUP1 \l47: ISZERO \l48: PUSH1 0x4f\l4a: JUMPI \l"]
+		block_4b [label="4b: PUSH1 0x0\l4d: DUP1 \l4e: REVERT \l"]
+		block_4f [label="4f: JUMPDEST \l50: POP \l51: PUSH1 0x7a\l53: PUSH1 0x4\l55: DUP1 \l56: CALLDATASIZE \l57: SUB \l58: DUP2 \l59: ADD \l5a: SWAP1 \l5b: DUP1 \l5c: DUP1 \l5d: CALLDATALOAD \l5e: SWAP1 \l5f: PUSH1 0x20\l61: ADD \l62: SWAP1 \l63: SWAP3 \l64: SWAP2 \l65: SWAP1 \l66: DUP1 \l67: CALLDATALOAD \l68: PUSH1 0x0\l6a: NOT \l6b: AND \l6c: SWAP1 \l6d: PUSH1 0x20\l6f: ADD \l70: SWAP1 \l71: SWAP3 \l72: SWAP2 \l73: SWAP1 \l74: POP \l75: POP \l76: POP \l77: PUSH1 0x7c\l79: JUMP \l"]
+		block_7a [label="7a: JUMPDEST \l7b: STOP \l"]
+		block_7c [label="7c: JUMPDEST \l7d: PUSH1 0x0\l7f: DUP1 \l80: DUP4 \l81: DUP2 \l82: MSTORE \l83: PUSH1 0x20\l85: ADD \l86: SWAP1 \l87: DUP2 \l88: MSTORE \l89: PUSH1 0x20\l8b: ADD \l8c: PUSH1 0x0\l8e: SHA3 \l8f: PUSH1 0x0\l91: SWAP1 \l92: SLOAD \l93: SWAP1 \l94: PUSH2 0x100\l97: EXP \l98: SWAP1 \l99: DIV \l9a: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\laf: AND \lb0: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\lc5: AND \lc6: DUP2 \lc7: PUSH1 0x40\lc9: MLOAD \lca: DUP1 \lcb: DUP3 \lcc: PUSH1 0x0\lce: NOT \lcf: AND \ld0: PUSH1 0x0\ld2: NOT \ld3: AND \ld4: DUP2 \ld5: MSTORE \ld6: PUSH1 0x20\ld8: ADD \ld9: SWAP2 \lda: POP \ldb: POP \ldc: PUSH1 0x0\lde: PUSH1 0x40\le0: MLOAD \le1: DUP1 \le2: DUP4 \le3: SUB \le4: DUP2 \le5: DUP6 \le6: GAS \le7: DELEGATECALL \le8: SWAP2 \le9: POP \lea: POP \leb: POP \lec: POP \led: POP \lee: JUMP \l"]
+		block_ef [label="ef: STOP \l"]
+	}
+	block_44 -> block_4b [color=red]
+	block_7c -> block_7a [color=blue]
+	block_4f -> block_7c [color=blue]
+	block_44 -> block_4f [color=green]
+	block_c -> block_44 [color=green]
+	block_c -> block_3f [color=red]
+	block_0 -> block_c [color=red]
+	block_0 -> block_3f [color=green]
+}

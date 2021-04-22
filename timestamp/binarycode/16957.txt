@@ -1,0 +1,27 @@
+digraph "graph.cfg.gv" {
+	subgraph global {
+		node [fontname=Courier fontsize=30.0 rank=same shape=box]
+		block_0 [label="0: PUSH1 0x80\l2: PUSH1 0x40\l4: MSTORE \l5: PUSH1 0x4\l7: CALLDATASIZE \l8: LT \l9: PUSH1 0x3f\lb: JUMPI \l"]
+		block_c [label="c: PUSH1 0x0\le: CALLDATALOAD \lf: PUSH29 0x100000000000000000000000000000000000000000000000000000000\l2d: SWAP1 \l2e: DIV \l2f: PUSH4 0xffffffff\l34: AND \l35: DUP1 \l36: PUSH4 0x2e48f65d\l3b: EQ \l3c: PUSH1 0x44\l3e: JUMPI \l"]
+		block_3f [label="3f: JUMPDEST \l40: PUSH1 0x0\l42: DUP1 \l43: REVERT \l"]
+		block_44 [label="44: JUMPDEST \l45: CALLVALUE \l46: DUP1 \l47: ISZERO \l48: PUSH1 0x4f\l4a: JUMPI \l"]
+		block_4b [label="4b: PUSH1 0x0\l4d: DUP1 \l4e: REVERT \l"]
+		block_4f [label="4f: JUMPDEST \l50: POP \l51: PUSH1 0x56\l53: PUSH1 0x58\l55: JUMP \l"]
+		block_56 [label="56: JUMPDEST \l57: STOP \l"]
+		block_58 [label="58: JUMPDEST \l59: PUSH1 0x0\l5b: DUP1 \l5c: PUSH1 0x0\l5e: DUP1 \l5f: PUSH1 0x0\l61: CALLER \l62: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\l77: AND \l78: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\l8d: AND \l8e: DUP2 \l8f: MSTORE \l90: PUSH1 0x20\l92: ADD \l93: SWAP1 \l94: DUP2 \l95: MSTORE \l96: PUSH1 0x20\l98: ADD \l99: PUSH1 0x0\l9b: SHA3 \l9c: SWAP3 \l9d: POP \l9e: DUP3 \l9f: PUSH1 0x1\la1: ADD \la2: SLOAD \la3: TIMESTAMP \la4: SUB \la5: SWAP2 \la6: POP \la7: PUSH3 0x112480\lab: SWAP1 \lac: POP \lad: PUSH1 0x0\laf: DUP2 \lb0: GT \lb1: ISZERO \lb2: PUSH1 0xba\lb4: JUMPI \l"]
+		block_b5 [label="b5: DUP2 \lb6: DUP2 \lb7: MUL \lb8: SWAP1 \lb9: POP \l"]
+		block_ba [label="ba: JUMPDEST \lbb: POP \lbc: POP \lbd: POP \lbe: JUMP \l"]
+		block_bf [label="bf: STOP \l"]
+	}
+	block_44 -> block_4f [color=green]
+	block_44 -> block_4b [color=red]
+	block_c -> block_3f [color=red]
+	block_0 -> block_c [color=red]
+	block_ba -> block_56 [color=blue]
+	block_0 -> block_3f [color=green]
+	block_58 -> block_b5 [color=red]
+	block_58 -> block_ba [color=green]
+	block_4f -> block_58 [color=blue]
+	block_b5 -> block_ba [color=cyan]
+	block_c -> block_44 [color=green]
+}

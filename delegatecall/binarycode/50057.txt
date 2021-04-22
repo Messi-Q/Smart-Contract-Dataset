@@ -1,0 +1,25 @@
+digraph "graph.cfg.gv" {
+	subgraph global {
+		node [fontname=Courier fontsize=30.0 rank=same shape=box]
+		block_0 [label="0: PUSH1 0x80\l2: PUSH1 0x40\l4: MSTORE \l5: PUSH1 0x4\l7: CALLDATASIZE \l8: LT \l9: PUSH1 0x3f\lb: JUMPI \l"]
+		block_c [label="c: PUSH1 0x0\le: CALLDATALOAD \lf: PUSH29 0x100000000000000000000000000000000000000000000000000000000\l2d: SWAP1 \l2e: DIV \l2f: PUSH4 0xffffffff\l34: AND \l35: DUP1 \l36: PUSH4 0x5c19a95c\l3b: EQ \l3c: PUSH1 0x44\l3e: JUMPI \l"]
+		block_3f [label="3f: JUMPDEST \l40: PUSH1 0x0\l42: DUP1 \l43: REVERT \l"]
+		block_44 [label="44: JUMPDEST \l45: PUSH1 0x76\l47: PUSH1 0x4\l49: DUP1 \l4a: CALLDATASIZE \l4b: SUB \l4c: DUP2 \l4d: ADD \l4e: SWAP1 \l4f: DUP1 \l50: DUP1 \l51: CALLDATALOAD \l52: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\l67: AND \l68: SWAP1 \l69: PUSH1 0x20\l6b: ADD \l6c: SWAP1 \l6d: SWAP3 \l6e: SWAP2 \l6f: SWAP1 \l70: POP \l71: POP \l72: POP \l73: PUSH1 0x90\l75: JUMP \l"]
+		block_76 [label="76: JUMPDEST \l77: PUSH1 0x40\l79: MLOAD \l7a: DUP1 \l7b: DUP3 \l7c: ISZERO \l7d: ISZERO \l7e: ISZERO \l7f: ISZERO \l80: DUP2 \l81: MSTORE \l82: PUSH1 0x20\l84: ADD \l85: SWAP2 \l86: POP \l87: POP \l88: PUSH1 0x40\l8a: MLOAD \l8b: DUP1 \l8c: SWAP2 \l8d: SUB \l8e: SWAP1 \l8f: RETURN \l"]
+		block_90 [label="90: JUMPDEST \l91: PUSH1 0x0\l93: DUP2 \l94: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\la9: AND \laa: PUSH1 0x0\lac: CALLDATASIZE \lad: PUSH1 0x40\laf: MLOAD \lb0: DUP1 \lb1: DUP4 \lb2: DUP4 \lb3: DUP1 \lb4: DUP3 \lb5: DUP5 \lb6: CALLDATACOPY \lb7: DUP3 \lb8: ADD \lb9: SWAP2 \lba: POP \lbb: POP \lbc: SWAP3 \lbd: POP \lbe: POP \lbf: POP \lc0: PUSH1 0x0\lc2: PUSH1 0x40\lc4: MLOAD \lc5: DUP1 \lc6: DUP4 \lc7: SUB \lc8: DUP2 \lc9: DUP6 \lca: GAS \lcb: DELEGATECALL \lcc: SWAP2 \lcd: POP \lce: POP \lcf: ISZERO \ld0: ISZERO \ld1: PUSH1 0xdb\ld3: JUMPI \l"]
+		block_d4 [label="d4: PUSH1 0x0\ld6: SWAP1 \ld7: POP \ld8: PUSH1 0xe0\lda: JUMP \l"]
+		block_db [label="db: JUMPDEST \ldc: PUSH1 0x1\lde: SWAP1 \ldf: POP \l"]
+		block_e0 [label="e0: JUMPDEST \le1: SWAP2 \le2: SWAP1 \le3: POP \le4: JUMP \l"]
+		block_e5 [label="e5: STOP \l"]
+	}
+	block_db -> block_e0 [color=cyan]
+	block_c -> block_3f [color=red]
+	block_c -> block_44 [color=green]
+	block_d4 -> block_e0 [color=blue]
+	block_0 -> block_c [color=red]
+	block_0 -> block_3f [color=green]
+	block_90 -> block_d4 [color=red]
+	block_e0 -> block_76 [color=blue]
+	block_44 -> block_90 [color=blue]
+	block_90 -> block_db [color=green]
+}

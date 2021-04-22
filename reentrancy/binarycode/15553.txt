@@ -1,0 +1,22 @@
+digraph "graph.cfg.gv" {
+	subgraph global {
+		node [fontname=Courier fontsize=30.0 rank=same shape=box]
+		block_0 [label="0: PUSH1 0x80\l2: PUSH1 0x40\l4: MSTORE \l5: PUSH1 0x4\l7: CALLDATASIZE \l8: LT \l9: PUSH1 0x3f\lb: JUMPI \l"]
+		block_c [label="c: PUSH1 0x0\le: CALLDATALOAD \lf: PUSH29 0x100000000000000000000000000000000000000000000000000000000\l2d: SWAP1 \l2e: DIV \l2f: PUSH4 0xffffffff\l34: AND \l35: DUP1 \l36: PUSH4 0xba9130a6\l3b: EQ \l3c: PUSH1 0x44\l3e: JUMPI \l"]
+		block_3f [label="3f: JUMPDEST \l40: PUSH1 0x0\l42: DUP1 \l43: REVERT \l"]
+		block_44 [label="44: JUMPDEST \l45: PUSH1 0xa2\l47: PUSH1 0x4\l49: DUP1 \l4a: CALLDATASIZE \l4b: SUB \l4c: DUP2 \l4d: ADD \l4e: SWAP1 \l4f: DUP1 \l50: DUP1 \l51: CALLDATALOAD \l52: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\l67: AND \l68: SWAP1 \l69: PUSH1 0x20\l6b: ADD \l6c: SWAP1 \l6d: SWAP3 \l6e: SWAP2 \l6f: SWAP1 \l70: DUP1 \l71: CALLDATALOAD \l72: SWAP1 \l73: PUSH1 0x20\l75: ADD \l76: SWAP1 \l77: DUP3 \l78: ADD \l79: DUP1 \l7a: CALLDATALOAD \l7b: SWAP1 \l7c: PUSH1 0x20\l7e: ADD \l7f: SWAP2 \l80: SWAP1 \l81: SWAP2 \l82: SWAP3 \l83: SWAP4 \l84: SWAP2 \l85: SWAP3 \l86: SWAP4 \l87: SWAP1 \l88: DUP1 \l89: CALLDATALOAD \l8a: SWAP1 \l8b: PUSH1 0x20\l8d: ADD \l8e: SWAP1 \l8f: SWAP3 \l90: SWAP2 \l91: SWAP1 \l92: DUP1 \l93: CALLDATALOAD \l94: SWAP1 \l95: PUSH1 0x20\l97: ADD \l98: SWAP1 \l99: SWAP3 \l9a: SWAP2 \l9b: SWAP1 \l9c: POP \l9d: POP \l9e: POP \l9f: PUSH1 0xa4\la1: JUMP \l"]
+		block_a2 [label="a2: JUMPDEST \la3: STOP \l"]
+		block_a4 [label="a4: JUMPDEST \la5: DUP5 \la6: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\lbb: AND \lbc: DUP3 \lbd: DUP3 \lbe: SWAP1 \lbf: DUP7 \lc0: DUP7 \lc1: PUSH1 0x40\lc3: MLOAD \lc4: DUP1 \lc5: DUP4 \lc6: DUP4 \lc7: DUP1 \lc8: DUP3 \lc9: DUP5 \lca: CALLDATACOPY \lcb: DUP3 \lcc: ADD \lcd: SWAP2 \lce: POP \lcf: POP \ld0: SWAP3 \ld1: POP \ld2: POP \ld3: POP \ld4: PUSH1 0x0\ld6: PUSH1 0x40\ld8: MLOAD \ld9: DUP1 \lda: DUP4 \ldb: SUB \ldc: DUP2 \ldd: DUP6 \lde: DUP9 \ldf: DUP9 \le0: CALL \le1: SWAP4 \le2: POP \le3: POP \le4: POP \le5: POP \le6: ISZERO \le7: ISZERO \le8: PUSH1 0xef\lea: JUMPI \l"]
+		block_eb [label="eb: PUSH1 0x0\led: DUP1 \lee: REVERT \l"]
+		block_ef [label="ef: JUMPDEST \lf0: POP \lf1: POP \lf2: POP \lf3: POP \lf4: POP \lf5: JUMP \l"]
+		block_f6 [label="f6: STOP \l"]
+	}
+	block_c -> block_3f [color=red]
+	block_a4 -> block_eb [color=red]
+	block_0 -> block_c [color=red]
+	block_c -> block_44 [color=green]
+	block_44 -> block_a4 [color=blue]
+	block_a4 -> block_ef [color=green]
+	block_ef -> block_a2 [color=blue]
+	block_0 -> block_3f [color=green]
+}

@@ -1,0 +1,25 @@
+digraph "graph.cfg.gv" {
+	subgraph global {
+		node [fontname=Courier fontsize=30.0 rank=same shape=box]
+		block_0 [label="0: PUSH1 0x80\l2: PUSH1 0x40\l4: MSTORE \l5: PUSH1 0x4\l7: CALLDATASIZE \l8: LT \l9: PUSH1 0x3f\lb: JUMPI \l"]
+		block_c [label="c: PUSH1 0x0\le: CALLDATALOAD \lf: PUSH29 0x100000000000000000000000000000000000000000000000000000000\l2d: SWAP1 \l2e: DIV \l2f: PUSH4 0xffffffff\l34: AND \l35: DUP1 \l36: PUSH4 0xc89e4361\l3b: EQ \l3c: PUSH1 0x44\l3e: JUMPI \l"]
+		block_3f [label="3f: JUMPDEST \l40: PUSH1 0x0\l42: DUP1 \l43: REVERT \l"]
+		block_44 [label="44: JUMPDEST \l45: CALLVALUE \l46: DUP1 \l47: ISZERO \l48: PUSH1 0x4f\l4a: JUMPI \l"]
+		block_4b [label="4b: PUSH1 0x0\l4d: DUP1 \l4e: REVERT \l"]
+		block_4f [label="4f: JUMPDEST \l50: POP \l51: PUSH1 0x56\l53: PUSH1 0x58\l55: JUMP \l"]
+		block_56 [label="56: JUMPDEST \l57: STOP \l"]
+		block_58 [label="58: JUMPDEST \l59: PUSH1 0x0\l5b: DUP1 \l5c: CALLDATASIZE \l5d: PUSH1 0x0\l5f: PUSH20 0xd6c969d0004b431189f834203ce0f5530e06259\l74: GAS \l75: DELEGATECALL \l76: DUP1 \l77: PUSH1 0x0\l79: DUP2 \l7a: EQ \l7b: PUSH1 0x82\l7d: JUMPI \l"]
+		block_7e [label="7e: RETURNDATASIZE \l7f: PUSH1 0x0\l81: RETURN \l"]
+		block_82 [label="82: JUMPDEST \l83: RETURNDATASIZE \l84: PUSH1 0x0\l86: REVERT \l"]
+		block_87 [label="87: STOP \l"]
+	}
+	block_4f -> block_58 [color=blue]
+	block_58 -> block_7e [color=red]
+	block_58 -> block_82 [color=green]
+	block_44 -> block_4b [color=red]
+	block_44 -> block_4f [color=green]
+	block_c -> block_44 [color=green]
+	block_c -> block_3f [color=red]
+	block_0 -> block_c [color=red]
+	block_0 -> block_3f [color=green]
+}

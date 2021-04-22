@@ -1,0 +1,22 @@
+digraph "graph.cfg.gv" {
+	subgraph global {
+		node [fontname=Courier fontsize=30.0 rank=same shape=box]
+		block_0 [label="0: PUSH1 0x80\l2: PUSH1 0x40\l4: MSTORE \l5: PUSH1 0x4\l7: CALLDATASIZE \l8: LT \l9: PUSH1 0x3f\lb: JUMPI \l"]
+		block_c [label="c: PUSH1 0x0\le: CALLDATALOAD \lf: PUSH29 0x100000000000000000000000000000000000000000000000000000000\l2d: SWAP1 \l2e: DIV \l2f: PUSH4 0xffffffff\l34: AND \l35: DUP1 \l36: PUSH4 0x76c2c0aa\l3b: EQ \l3c: PUSH1 0x44\l3e: JUMPI \l"]
+		block_3f [label="3f: JUMPDEST \l40: PUSH1 0x0\l42: DUP1 \l43: REVERT \l"]
+		block_44 [label="44: JUMPDEST \l45: CALLVALUE \l46: DUP1 \l47: ISZERO \l48: PUSH1 0x4f\l4a: JUMPI \l"]
+		block_4b [label="4b: PUSH1 0x0\l4d: DUP1 \l4e: REVERT \l"]
+		block_4f [label="4f: JUMPDEST \l50: POP \l51: PUSH1 0x56\l53: PUSH1 0x78\l55: JUMP \l"]
+		block_56 [label="56: JUMPDEST \l57: PUSH1 0x40\l59: MLOAD \l5a: DUP1 \l5b: DUP3 \l5c: PUSH4 0xffffffff\l61: AND \l62: PUSH4 0xffffffff\l67: AND \l68: DUP2 \l69: MSTORE \l6a: PUSH1 0x20\l6c: ADD \l6d: SWAP2 \l6e: POP \l6f: POP \l70: PUSH1 0x40\l72: MLOAD \l73: DUP1 \l74: SWAP2 \l75: SUB \l76: SWAP1 \l77: RETURN \l"]
+		block_78 [label="78: JUMPDEST \l79: PUSH1 0x0\l7b: DUP1 \l7c: SWAP1 \l7d: SLOAD \l7e: SWAP1 \l7f: PUSH2 0x100\l82: EXP \l83: SWAP1 \l84: DIV \l85: PUSH4 0xffffffff\l8a: AND \l8b: DUP2 \l8c: JUMP \l"]
+		block_8d [label="8d: STOP \l"]
+	}
+	block_44 -> block_4f [color=green]
+	block_78 -> block_56 [color=blue]
+	block_4f -> block_78 [color=blue]
+	block_44 -> block_4b [color=red]
+	block_c -> block_3f [color=red]
+	block_0 -> block_c [color=red]
+	block_0 -> block_3f [color=green]
+	block_c -> block_44 [color=green]
+}

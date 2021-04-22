@@ -1,0 +1,22 @@
+digraph "graph.cfg.gv" {
+	subgraph global {
+		node [fontname=Courier fontsize=30.0 rank=same shape=box]
+		block_0 [label="0: PUSH1 0x80\l2: PUSH1 0x40\l4: MSTORE \l5: PUSH1 0x4\l7: CALLDATASIZE \l8: LT \l9: PUSH1 0x3f\lb: JUMPI \l"]
+		block_c [label="c: PUSH1 0x0\le: CALLDATALOAD \lf: PUSH29 0x100000000000000000000000000000000000000000000000000000000\l2d: SWAP1 \l2e: DIV \l2f: PUSH4 0xffffffff\l34: AND \l35: DUP1 \l36: PUSH4 0xbb6224df\l3b: EQ \l3c: PUSH1 0x44\l3e: JUMPI \l"]
+		block_3f [label="3f: JUMPDEST \l40: PUSH1 0x0\l42: DUP1 \l43: REVERT \l"]
+		block_44 [label="44: JUMPDEST \l45: PUSH1 0x66\l47: PUSH1 0x4\l49: DUP1 \l4a: CALLDATASIZE \l4b: SUB \l4c: DUP2 \l4d: ADD \l4e: SWAP1 \l4f: DUP1 \l50: DUP1 \l51: CALLDATALOAD \l52: PUSH4 0xffffffff\l57: AND \l58: SWAP1 \l59: PUSH1 0x20\l5b: ADD \l5c: SWAP1 \l5d: SWAP3 \l5e: SWAP2 \l5f: SWAP1 \l60: POP \l61: POP \l62: POP \l63: PUSH1 0x68\l65: JUMP \l"]
+		block_66 [label="66: JUMPDEST \l67: STOP \l"]
+		block_68 [label="68: JUMPDEST \l69: DUP1 \l6a: PUSH4 0xffffffff\l6f: AND \l70: TIMESTAMP \l71: LT \l72: ISZERO \l73: ISZERO \l74: PUSH1 0xe4\l76: JUMPI \l"]
+		block_77 [label="77: PUSH1 0x40\l79: MLOAD \l7a: PUSH32 0x8c379a000000000000000000000000000000000000000000000000000000000\l9b: DUP2 \l9c: MSTORE \l9d: PUSH1 0x4\l9f: ADD \la0: DUP1 \la1: DUP1 \la2: PUSH1 0x20\la4: ADD \la5: DUP3 \la6: DUP2 \la7: SUB \la8: DUP3 \la9: MSTORE \laa: PUSH1 0x15\lac: DUP2 \lad: MSTORE \lae: PUSH1 0x20\lb0: ADD \lb1: DUP1 \lb2: PUSH32 0x5369676e61747572652068617320657870697265640000000000000000000000\ld3: DUP2 \ld4: MSTORE \ld5: POP \ld6: PUSH1 0x20\ld8: ADD \ld9: SWAP2 \lda: POP \ldb: POP \ldc: PUSH1 0x40\lde: MLOAD \ldf: DUP1 \le0: SWAP2 \le1: SUB \le2: SWAP1 \le3: REVERT \l"]
+		block_e4 [label="e4: JUMPDEST \le5: POP \le6: JUMP \l"]
+		block_e7 [label="e7: STOP \l"]
+	}
+	block_e4 -> block_66 [color=blue]
+	block_c -> block_3f [color=red]
+	block_0 -> block_c [color=red]
+	block_68 -> block_77 [color=red]
+	block_0 -> block_3f [color=green]
+	block_68 -> block_e4 [color=green]
+	block_44 -> block_68 [color=blue]
+	block_c -> block_44 [color=green]
+}

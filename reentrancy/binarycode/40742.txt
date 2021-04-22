@@ -1,0 +1,26 @@
+digraph "graph.cfg.gv" {
+	subgraph global {
+		node [fontname=Courier fontsize=30.0 rank=same shape=box]
+		block_0 [label="0: PUSH1 0x80\l2: PUSH1 0x40\l4: MSTORE \l5: PUSH1 0x4\l7: CALLDATASIZE \l8: LT \l9: PUSH2 0x41\lc: JUMPI \l"]
+		block_d [label="d: PUSH1 0x0\lf: CALLDATALOAD \l10: PUSH29 0x100000000000000000000000000000000000000000000000000000000\l2e: SWAP1 \l2f: DIV \l30: PUSH4 0xffffffff\l35: AND \l36: DUP1 \l37: PUSH4 0x5fd8c710\l3c: EQ \l3d: PUSH2 0x46\l40: JUMPI \l"]
+		block_41 [label="41: JUMPDEST \l42: PUSH1 0x0\l44: DUP1 \l45: REVERT \l"]
+		block_46 [label="46: JUMPDEST \l47: CALLVALUE \l48: DUP1 \l49: ISZERO \l4a: PUSH2 0x52\l4d: JUMPI \l"]
+		block_4e [label="4e: PUSH1 0x0\l50: DUP1 \l51: REVERT \l"]
+		block_52 [label="52: JUMPDEST \l53: POP \l54: PUSH2 0x5b\l57: PUSH2 0x5d\l5a: JUMP \l"]
+		block_5b [label="5b: JUMPDEST \l5c: STOP \l"]
+		block_5d [label="5d: JUMPDEST \l5e: CALLER \l5f: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\l74: AND \l75: PUSH1 0x0\l77: DUP1 \l78: CALLER \l79: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\l8e: AND \l8f: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\la4: AND \la5: DUP2 \la6: MSTORE \la7: PUSH1 0x20\la9: ADD \laa: SWAP1 \lab: DUP2 \lac: MSTORE \lad: PUSH1 0x20\laf: ADD \lb0: PUSH1 0x0\lb2: SHA3 \lb3: SLOAD \lb4: PUSH1 0x40\lb6: MLOAD \lb7: PUSH1 0x0\lb9: PUSH1 0x40\lbb: MLOAD \lbc: DUP1 \lbd: DUP4 \lbe: SUB \lbf: DUP2 \lc0: DUP6 \lc1: DUP8 \lc2: GAS \lc3: CALL \lc4: SWAP3 \lc5: POP \lc6: POP \lc7: POP \lc8: ISZERO \lc9: ISZERO \lca: PUSH2 0xd2\lcd: JUMPI \l"]
+		block_ce [label="ce: PUSH1 0x0\ld0: DUP1 \ld1: REVERT \l"]
+		block_d2 [label="d2: JUMPDEST \ld3: PUSH1 0x0\ld5: DUP1 \ld6: PUSH1 0x0\ld8: CALLER \ld9: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\lee: AND \lef: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\l104: AND \l105: DUP2 \l106: MSTORE \l107: PUSH1 0x20\l109: ADD \l10a: SWAP1 \l10b: DUP2 \l10c: MSTORE \l10d: PUSH1 0x20\l10f: ADD \l110: PUSH1 0x0\l112: SHA3 \l113: DUP2 \l114: SWAP1 \l115: SSTORE \l116: POP \l117: JUMP \l"]
+		block_118 [label="118: STOP \l"]
+	}
+	block_d -> block_41 [color=red]
+	block_d -> block_46 [color=green]
+	block_0 -> block_d [color=red]
+	block_52 -> block_5d [color=blue]
+	block_46 -> block_4e [color=red]
+	block_5d -> block_ce [color=red]
+	block_d2 -> block_5b [color=blue]
+	block_0 -> block_41 [color=green]
+	block_46 -> block_52 [color=green]
+	block_5d -> block_d2 [color=green]
+}

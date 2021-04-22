@@ -1,0 +1,23 @@
+digraph "graph.cfg.gv" {
+	subgraph global {
+		node [fontname=Courier fontsize=30.0 rank=same shape=box]
+		block_0 [label="0: PUSH1 0x80\l2: PUSH1 0x40\l4: MSTORE \l5: PUSH1 0x4\l7: CALLDATASIZE \l8: LT \l9: PUSH1 0x3f\lb: JUMPI \l"]
+		block_c [label="c: PUSH1 0x0\le: CALLDATALOAD \lf: PUSH29 0x100000000000000000000000000000000000000000000000000000000\l2d: SWAP1 \l2e: DIV \l2f: PUSH4 0xffffffff\l34: AND \l35: DUP1 \l36: PUSH4 0x30df2139\l3b: EQ \l3c: PUSH1 0x44\l3e: JUMPI \l"]
+		block_3f [label="3f: JUMPDEST \l40: PUSH1 0x0\l42: DUP1 \l43: REVERT \l"]
+		block_44 [label="44: JUMPDEST \l45: PUSH1 0x60\l47: PUSH1 0x4\l49: DUP1 \l4a: CALLDATASIZE \l4b: SUB \l4c: DUP2 \l4d: ADD \l4e: SWAP1 \l4f: DUP1 \l50: DUP1 \l51: CALLDATALOAD \l52: SWAP1 \l53: PUSH1 0x20\l55: ADD \l56: SWAP1 \l57: SWAP3 \l58: SWAP2 \l59: SWAP1 \l5a: POP \l5b: POP \l5c: POP \l5d: PUSH1 0x62\l5f: JUMP \l"]
+		block_60 [label="60: JUMPDEST \l61: STOP \l"]
+		block_62 [label="62: JUMPDEST \l63: DUP1 \l64: ADDRESS \l65: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\l7a: AND \l7b: BALANCE \l7c: LT \l7d: ISZERO \l7e: ISZERO \l7f: PUSH1 0xd0\l81: JUMPI \l"]
+		block_82 [label="82: PUSH1 0x0\l84: DUP1 \l85: SWAP1 \l86: SLOAD \l87: SWAP1 \l88: PUSH2 0x100\l8b: EXP \l8c: SWAP1 \l8d: DIV \l8e: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\la3: AND \la4: PUSH20 0xffffffffffffffffffffffffffffffffffffffff\lb9: AND \lba: DUP2 \lbb: PUSH1 0x40\lbd: MLOAD \lbe: PUSH1 0x0\lc0: PUSH1 0x40\lc2: MLOAD \lc3: DUP1 \lc4: DUP4 \lc5: SUB \lc6: DUP2 \lc7: DUP6 \lc8: DUP8 \lc9: GAS \lca: CALL \lcb: SWAP3 \lcc: POP \lcd: POP \lce: POP \lcf: POP \l"]
+		block_d0 [label="d0: JUMPDEST \ld1: POP \ld2: JUMP \l"]
+		block_d3 [label="d3: STOP \l"]
+	}
+	block_62 -> block_82 [color=red]
+	block_c -> block_3f [color=red]
+	block_0 -> block_c [color=red]
+	block_c -> block_44 [color=green]
+	block_82 -> block_d0 [color=cyan]
+	block_d0 -> block_60 [color=blue]
+	block_0 -> block_3f [color=green]
+	block_62 -> block_d0 [color=green]
+	block_44 -> block_62 [color=blue]
+}

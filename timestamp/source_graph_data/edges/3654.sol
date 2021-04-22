@@ -1,0 +1,4 @@
+N1 C1 1 RG
+N1 N2 2 RG
+N1 N3 3 RG
+C1 N2 4 AG

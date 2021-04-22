@@ -1,0 +1,9 @@
+N1 N1 NoLimit NULL 1 Normal
+C1 C1 OwnerLimit N1 2 CoreInternal
+C2 C2 OwnerLimit C1,C3 3 Core
+N2 N2 NoLimit N1 4 Normal
+C3 C3 NoLimit N2,N4 5 Core
+N3 N3 NoLimit C2 6 Normal
+N4 N4 NoLimit C2,N3 7 Normal
+C4 C4 NoLimit C3 8 CoreDelegate
+N5 N5 NoLimit C4 9 Normal
