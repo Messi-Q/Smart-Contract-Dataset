@@ -1,4 +1,4 @@
-contract Ownable{
+contract Ownable {
     uint public totalAmount;
 
     function setupDisbursement(uint256 _value) external returns (uint) {

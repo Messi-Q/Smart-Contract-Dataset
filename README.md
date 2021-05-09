@@ -9,19 +9,19 @@ Block timestamp dependence is considered as using _block.timestamp_ (or _block.n
 
 
 ### How to label the timestamp dependency vulnerability?
-We design three local patterns to label the timestamp dependence vulnerability dataset. The first pattern **timestampInvoc** models 
-whether there exists an invocation to _block.timestamp_ in the function. The second pattern **timestampAssign** checks 
-whether the value of _block.timestamp_ is assigned to other variables or passed to a condition statement as a parameter, 
-namely whether _block.timestamp_ is actually used. Last, the third pattern **timestampContaminate** checks 
-if _block.timestamp_ may contaminate the triggering condition of a critical operation (e.g., money transfer) or the return value.
+We design three local patterns to label the timestamp dependence vulnerability dataset. 
+The first pattern **timestampInvocation** models whether there exists an invocation to _block.timestamp_ in the function.
+The second pattern **timestampAssign** checks whether the value of _block.timestamp_ is assigned to other variables or passed to a condition statement as a parameter, namely whether _block.timestamp_ is actually used. 
+Last, the third pattern **timestampContaminate** checks if _block.timestamp_ may contaminate the triggering condition of a critical operation (e.g., money transfer) or the return value.
+We label a function with timestamp dependence vulnerability as:**TimestampInvoc ∧ (TimestampAssign ∨ TimestampContaminate)**.
 
 
-### TimestampInvoc
+### timestampInvocation
 
 Note that we treat those functions with the key word of _block.timestamp_ as the research targets. As such, we utilize the pattern **timestampInvoc** to filter those functions without the key word of _block.timestamp_. 
 
 
-### TimestampAssign 
+### timestampAssign 
 
 Case 1：When the value of _block.timestamp_ is assigned to a variable and the variable is used by the following operations or 
 passed to a condition statement as a parameter, we label the corresponding function exists the timestamp dependency vulnerability.
@@ -41,7 +41,7 @@ is called in the return statement (line 5). Therefore, we mark that the function
 timestamp dependency vulnerability, i.e., label = 1.
 
 
-Case 2: When the value of _block.timestamp_ is called by the condition statements (e.g., _require_ and _assert_), we consider 
+Case 2: When the value of _block.timestamp_ is assigned by the condition statements (e.g., _require_ and _assert_), we consider 
 that the _block.timestamp_ is constricted by the condition statements, we label the corresponding function does not exist 
 the timestamp dependency vulnerability.
 
@@ -60,13 +60,14 @@ the timestamp dependency vulnerability.
     ```
     
 For instance, the value of _block.timestamp_ is assigned to variable _time_  (line 6), while the variable _time_
-is called in the require statement (line 7). Therefore, we mark that the function _withdrawal_ does not exist the 
+is assigned in the require statement (line 7). Therefore, we mark that the function _withdrawal_ does not exist the 
 timestamp dependency vulnerability, i.e., label = 0.
 
 
-### TimestampContaminate
+### timestampContaminate
 
-case 1：当条件语句的控制内容涉及函数的返回值，此时，认定该合约存在时间戳依赖漏洞(标签为1)。
+case 1：When the control content of the conditional statement(e.g. _if_ and _while_) involves the return value of the function,
+we label the corresponding function exists the timestamp dependency vulnerability.
 
     ```
         1.contract CrowdsaleExt {
@@ -82,10 +83,11 @@ case 1：当条件语句的控制内容涉及函数的返回值，此时，认�
         11.}
      ``` 
        
-以上述合约第8行为例，当条件语句else if满足(block.timestamp < startsAt)时，函数getState返回值为State.PreFunding；
-显然，该合约符合对于情形1的定义，则认为该合约CrowdsaleExt存在时间戳依赖漏洞（标签为1）。
+For instance, when the conditional statement _else if_ satisfies _block.timestamp <startsAt_(line8)_, the return value of the function _getState_ is _State.PreFunding_;
+Therefore, we mark that the function _getState_ exist the timestamp dependency vulnerability, i.e., label = 1.
 
-Case 2：当条件语句的控制内容涉及转账等与资金相关的操作，此时，认定该合约存在时间戳依赖漏洞（标签为1）。
+Case 2：When the control content of the conditional statement involves money operations(e.g.,_transfers_),
+we label the corresponding function exists the timestamp dependency vulnerability.
     
     ```
         1.contract FreezableToken {
@@ -101,10 +103,12 @@ Case 2：当条件语句的控制内容涉及转账等与资金相关的操作�
         11.}
     ```
     
-以上述合约第5行为例，当条件语句while满足(release != 0 && block.timestamp > release)时，该合约执行call.value转账操作；
-显然，该合约符合对于情形2的定义，则认为该合约FreezableToken存在时间戳依赖漏洞（标签为1）。
 
-Case 3：当条件语句的控制内容与函数返回值和转账等资金操作无关，此时，认定该合约不存在时间戳依赖漏洞（标签为0）。
+For instance, when the conditional statement _while_ satisfies _release != 0 && block.timestamp> release_(line 5), the contract executes the _call.value_ transfer operation(line 7);
+Therefore, we mark that the function _releaseAll_ exist the timestamp dependency vulnerability, i.e., label = 1.
+
+Case 3：When the control content of the conditional statement don't relate with the return value of the function and money operations(e.g,transfer), 
+we label the corresponding function does not exist the timestamp dependency vulnerability.
     
     ```
         1.contract BirthdayGift {
@@ -119,43 +123,37 @@ Case 3：当条件语句的控制内容与函数返回值和转账等资金操�
         10.}
     ```
     
-以上述合约第6行为例，当条件语句if满足（block.timestamp < birthday）时，函数Take抛出异常；
-显然，该合约符合对于情形3的定义，则认为该合约BirthdayGift不存在时间戳依赖漏洞（标签为0）。
+
+For instance, when the conditional statement _if_ is satisfied _block.timestamp <birthday_, the function _Take_ throws an exception;
+Therefore, we mark that the function _Take_ dose not exist the timestamp dependency vulnerability, i.e., label = 0.
 
 
-
-
-## Reentancy
+## Reentrancy
 Reentrancy vulnerability is considered as an invocation to _call.value_ that can call back to itself 
 through a chain of calls.
 
 
 ### How to label the reentrancy vulnerability?
-We design four local patterns to label the reentrancy vulnerability dataset. The first sub-pattern is **callValueInvocation** 
-that checks whether there exists an invocation to call.value in the function. The second sub-pattern **balanceDeduction** checks 
-whether the user balance is deducted after money transfer using call.value, which considers the fact that the money stealing 
-can be avoided if user balance is deducted each time before money transfer.若合约地址余额的减操作出现在call.value之后，认定该合约满足该sub-pattern；
-The third sub-pattern **ValueNoZero** 校验call.value函数本身的参数是否为0，若call.value函数本身的参数为0,此时，认定该合约满足该sub-pattern.
-The last sub-pattern **ModifierConstrain** 校验call.value所在函数是否被OnlyOwner修饰器约束，若所在函数未被约束，认定该合约满足该sub-pattern.
-当合约满足上述四个sub-pattern，此时，认定该合约存在重入漏洞（标签为1）；否则，认定该合约不存在重入漏洞（标签为0）。
+We design four local patterns to label the reentrancy vulnerability dataset. 
+The first sub-pattern is **callValueInvocation** that checks whether there exists an invocation to call.value in the function.
+The second sub-pattern **balanceDeduction** checks whether the user balance is deducted after money transfer using _call.value_, which considers the fact that the money stealing 
+can be avoided if user balance is deducted each time before money transfer.
+The third sub-pattern **valueNegative** checks whether the parameter of the _call.value_ function itself is zero.
+The last sub-pattern **ModifierConstrain** checks whether the function corresponding _call.value_ is constrained by the _OnlyOwner_ modifier.
+We label a function with reentrancy vulnerability as: **callValueInvocation ∧ balanceDeduction ∧ ValueNegative ∧ (!ModifierConstrain)**.
 
 
-1. 是否存在call.value关键字的调用;  (if true -> 2 else label=0)
-2. addr.call.value(value)(), value的值是否大于0;  (if true -> 3 else label=0)
-3. addr的减value操作是否在call.value语句之后;  (if true -> 4 else label=0)
-4. call.value所在的转账函数有无onlyOwner修饰器约束;  (if true label=0 else label=1)
 
-
-### CallValueInvoc
+### callValueInvocation
 
 Note that we treat those contracts with the key word of call.value as the research targets. As such, we design the 
-pattern **callValueInvocation** to filter those functions without the key word of call.value.
-若合约不存在call.value关键字，此时，认定该合约不存在重入漏洞（标签为0）； 否则，继续对该合约进行校验.
+pattern **callValueInvocation** to filter those functions without the key word of _call.value_.
 
 
-### ValueNoZero
+### valueNegative
 
-Case 1:当合约中存在call.value关键字，若call.value函数的参数为0，此时，认定该合约不存在重入漏洞（标签为0）；否则，继续对该合约进行校验。
+Case 1:When the _call.value_ exists in the contract, and the parameter of the call.value function is zero; 
+we label the corresponding function does not exist the reentrancy vulnerability, i.e., label = 0. Otherwise, continues to verify the function.
      
      ```
         1.contract HiroyukiCoinDark {
@@ -170,13 +168,15 @@ Case 1:当合约中存在call.value关键字，若call.value函数的参数为0�
         10.}
     ```
     
-以上述合约为例，合约第7行call.value的参数为0；显然，满足情形1的定义，此时，认定该合约HiroyukiCoinDark不存在重入漏洞（标签为0）。
+For instance, the parameter of _call.value_ is zero(line 7); 
+Therefore, we mark that the function _transfer_ dose not exist the reentrancy vulnerability, i.e., label = 0.
 
 
-### BalanceDeduction
+### balanceDeduction
 
-Case 1:当合约存在call.value关键字且参数不为0，若调用call.value函数的合约地址余额减操作在call.value之前，此时，认定该合约不存在重入漏洞（标签为0）；否则，继续对该合约进行校验。
-    
+Case 1:When the parameter of _call.value_ is not zero, the user balance is deducted before money transfer using _call.value_; 
+we label the corresponding function does not exist the reentrancy vulnerability, i.e., label = 0. Otherwise, continues to verify the function.
+   
     ```
         1.contract NIZIGEN {
         2.    mapping (address => uint) balances;  
@@ -194,12 +194,13 @@ Case 1:当合约存在call.value关键字且参数不为0，若调用call.value�
         14.}
     ```
     
-以上述合约为例，合约第6行合约地址的余额减操作位于第7行call.value调用之前；显然，满足情形1的定义，此时，认定该合约NIZIGEN不存在重入漏洞（标签为0）。
+For instance, the user balance _balances[msg.sender]_(line 6) is deducted before money transfer using _call.value_ (line 7);
+we label the corresponding function does not exist the reentrancy vulnerability, i.e., label = 0.
 
+### modifierDeclaration
 
-### ModifierDeclaration
-
-Case 1:当合约满足上述3个pattern，若关键字call.value所在的函数有onlyOwner修饰器约束，此时，认定该合约不存在重入漏洞（标签为0)。
+Case 1:When function corresponding _call.value_ has the _onlyOwner_ modifier constraint;
+we label the corresponding function does not exist the reentrancy vulnerability.
     
     ```
         1.contract CrowdsaleWPTByRounds {
@@ -217,11 +218,12 @@ Case 1:当合约满足上述3个pattern，若关键字call.value所在的函数�
         13.}
     ```
     
-以上述合约为例，合约第5行存在关键字call.value，表明合约满足CallValueInvoc；且call.value函数的参数为msg.value而非0，表明该合约满足ValueNoZero；
-合约第6行余额减操作在call.value调用之后，表明该合约满足BalanceDeduction；且call.value所在函数_forwardFunds()被onlyOwner修饰器修饰;
-显然，该合约符合对情形1的定义，则认为该合约CrowdsaleWPTByRounds不存在重入漏洞（标签为0）。
+For instance, the function __forwardFunds_ corresponding _call.value_ is constraint by the _onlyOwner_ modifier(line 9);
+we label the function __forwardFunds_ does not exist the reentrancy vulnerability, i.e., label = 0.
 
-Case 2:当合约满足上述3个pattern，若关键字call.value所在的函数无onlyOwner修饰器约束，此时，认定该合约存在重入漏洞（标签为1)。
+
+Case 2:When function corresponding _call.value_ has not the _onlyOwner_ modifier constraint;
+we label the corresponding function exists the reentrancy vulnerability.
       
       ```
         1.contract CrowdsaleWPTByRounds {
@@ -234,35 +236,31 @@ Case 2:当合约满足上述3个pattern，若关键字call.value所在的函数�
         8.}
     ```
     
-以上述合约为例，合约第5行存在关键字call.value，表明合约满足CallValueInvoc；且call.value函数的参数为msg.value而非0，表明该合约满足ValueNoZero；
-合约第6行余额减操作在call.value调用之后，表明该合约满足BalanceDeduction；且call.value所在函数_forwardFunds()并未被onlyOwner修饰器修饰；
-显然，该合约符合对情形1的定义，则认为合约CrowdsaleWPTByRounds存在重入漏洞（标签为1）。
+For instance, the function __forwardFunds_ corresponding _call.value_ is not constraint by the _onlyOwner_ modifier(line 9);
+we label the function __forwardFunds_ exists the reentrancy vulnerability, i.e., label = 1.
 
 
 
 ## Integer Overflow/Underflow
+Integer Overflow/Underflow is considered as using srithmetic operation (e.g. +, -, *) between variables lead to the value of variables out of range.
 
 
 ### How to label the integer overflow/underflow vulnerability?
-We design three xxx patterns to label the integer overflow/underflow vulnerability dataset. 
-The first sub-pattern is **ArithmeticOperation**, 校验合约变量之间是否存在算数运算，若合约变量之间存在算数运算，认定该合约满足pattern1;
-The second sub-pattern is **SafeLibraryInvoc**, 校验合约变量之间的算数运算是否有安全库函数约束，若算数运算未被安全库函数约束，认定该合约满足pattern2;
-The last sub-pattern is **ConditionDeclaration**, 校验进行算数运算的合约变量是否被条件语句判断，若合约变量未被条件语句判断，认定该合约满足pattern3.
-若合约满足上述3个pattern，此时，认定该合约存在整数溢出漏洞（标签为1），否则，认定该合约不存在整数溢出漏洞(标签为0).
+We design three patterns to label the integer overflow/underflow vulnerability dataset. 
+The first sub-pattern is **arithmeticOperation** that checks whether there is arithmetic operation between variables.
+The second sub-pattern is **safeLibraryInvocation** that checks whether the arithmetic operations between variables are constraint by security library function.
+The last sub-pattern is **conditionDeclaration** that checks whether the variable for arithmetic operation is judged by the conditional statement.
+We label a function with integer overflow/underflow vulnerability as:**ArithmeticOperation ∧ (SafeLibraryInvoc ∨ ConditionDeclaration)**.
 
-1. 判断变量之间是否存在算术运算；(if true to 2 else label = 0)
-2. 判断变量之间算术运算是否有安全库函数约束；(if false to 3 else label = 0)
-3. 判断变量是否有条件语句约束；(if true label = 0 else label = 1)
-
-
-### ArithmeticOperation
-
-若合约变量之间不存在算数运算符("+","-","*"), 此时，认定该合约不存在整数溢出漏洞(标签为0); 否则, 继续对该合约进行校验.
+### arithmeticOperation
+Note that we treat those contracts with the key word of arithmetic operator(e.g. +, -, *) as the research targets. As such, we design the 
+pattern **arithmeticOperation** to filter those functions without the key word of arithmetic operator.
 
 
-### SafeLibraryInvoc
+### safeLibraryInvoc
 
-Case 1: 若合约变量之间存在算数运算, 且算数运算被安全库函数约束, 此时, 认定该合约不存在整数溢出漏洞(标签为0); 否则，继续对该合约进行校验。
+Case 1: When there are arithmetic operations between the variables, and the arithmetic operations are constrainted by the security library function;
+we label the corresponding function dose not exist the Integer Overflow/Underflow vulnerability.
     
     ```
         1.library SafeMath {
@@ -287,15 +285,16 @@ Case 1: 若合约变量之间存在算数运算, 且算数运算被安全库函�
         20. }
     ```
     
-以上述合约为例，合约第16行balances[mag.sender]变量和_value变量之间的减法（sub）运算，被合约第2行的安全库函数约束；显然，符合对情形1的定义，
-此时，认定该合约StandardToken不存在整数溢出漏洞（标签为0）。
+For instance, the subtraction operation between the _balances[mag.sender]_ and the __value_ (line 16) is constrained by the security library function (line 2); 
+we label the corresponding function _transfer_ dose not exist the Integer Overflow/Underflow vulnerability, i.e., label = 0.
 
 
-### ConditionDeclaration
+### conditionDeclaration
 
-case 1:若合约变量之间存在加法运算(或乘法运算), 且加法运算(或乘法运算)未被安全库函数约束, 
-当加法运算和与加法因子(或乘法运算乘积与乘法因子)同时出现在条件语句(assert、require、if、while)中进行比较且条件语句出现在加法运算(或乘法运算)之后，
-此时，认定该合约不存在整数溢出漏洞(标签为0).
+case 1:If there is an addition operation (or multiplication operation) between contract variables;
+When the summation and addition factor (or the product and the multiplication factor) appear in the conditional statement (e.g.assert, require, if, while) for comparison,
+and the conditional statement appears after the addition operation (or multiplication operation);
+we label the corresponding function dose not exist the Integer Overflow/Underflow vulnerability.
    
     ```
     1.contract Overflow_fixed_assert {
@@ -308,12 +307,14 @@ case 1:若合约变量之间存在加法运算(或乘法运算), 且加法运算
     8.}
     ```
     
-以上述合约为例，合约第4行sellerBalance变量和value变量之间存在加法运算，且加法运算并未被安全库函数约束，
-表明该合约满足ArithmeticOperation和SafeLibraryNoInvoc；合约第5行的assert语句中包含对加法运算的结果和因子的比较；
-显然，该合约符合对情形1的定义，则认为该合约Overflow_fixed_assert不存在整数溢出漏洞（标签为0）。
+For instance, there is an addition operation between the _sellerBalance_ and the _value_ (line 4) ,
+and _assert_ statement contains the comparison between the result of the addition operation and the factor (line 5);
+we label the corresponding function _add_ dose not exist the Integer Overflow/Underflow vulnerability, i.e., label = 0.
 
-case 2:若合约变量之间存在减法运算，且减法运算未被安全库函数约束，当减法运算被减数与减数同时出现在条件语句（assert、require、if、while）
-中进行比较且条件语句出现在减法运算之前，此时，认定该合约不存在整数溢出漏洞（标签为0）。
+case 2:If there is a subtraction operation between the contract variables,
+when the minute and minus appear in the conditional statement (assert, require, if, while) for comparison,
+and the conditional statement appears before the subtraction operation;
+we label the corresponding function dose not exist the Integer Overflow/Underflow vulnerability.
 
     ```
     1.contract HiroyukiCoinDark {
@@ -328,12 +329,13 @@ case 2:若合约变量之间存在减法运算，且减法运算未被安全库�
     10.}
     ```
  
-以上述合约为例，合约第5行balanceOf\[msg.sender]变量和_value变量之间存在减法运算，且减法运算并未被安全库函数约束，
-表明该合约满足ArithmeticOperation和SafeLibraryNoInvoc；合约第4行的require语句中包含对减法运算的被减数和减数的比较；
-显然，该合约符合对情形2的定义，则认为该合约HiroyukiCoinDark不存在整数溢出漏洞（标签为0）。
+For instance, there is a subtraction operation between the _balanceOf[msg.sender]_ and the __value_ variable (line 5),
+and require statement contains the comparison between the minute and minus of the subtraction operation (line 4);
+we label the corresponding function dose not exist the Integer Overflow/Underflow vulnerability, i.e., label = 0.
 
 
-case 3:若合约变量之间存在算数运算，且算数运算未被安全库函数约束，当合约不满足case 1和case 2，此时，认定该合约存在整数溢出漏洞（标签为1）。
+case 3:If there are arithmetic operations between contract variables, when the contract does not satisfy case 1 and case 2;
+we label the corresponding function exists the Integer Overflow/Underflow vulnerability.
     
     ```
     1. contract Overflow_add {
@@ -345,44 +347,27 @@ case 3:若合约变量之间存在算数运算，且算数运算未被安全库�
     7. }
     ```
     
-以上述合约为例，合约第4行sellerBalance变量和value变量之间存在加法运算，但在加法运算之后并未出现任何条件语句对这两个变量进行比较。
-显然，该合约符合对情形3的定义，则认为该合约Overflow_add存在整数溢出漏洞（标签为1）。
-
-
-
-## Transaction Order Dependence
-
-We design three xxx patterns to label the transaction Order Dependence vulnerability dataset. 
-
-1. 判断某个全局变量是否在两个函数中都出现；(if true to 2 else label = 0)
-2. 判断该全局变量是否存在修改操作；(if true label = 1 else label = 0)
-
-
-### VariableCrossFunc
-
-
-
-### VariableAssign
-
-
+For instance, there is an addition operation between the sellerBalance and the value variable (line 4), 
+and no conditional statement to compare the two variables after the addition operation;
+we label the corresponding function _add_ exists the Integer Overflow/Underflow vulnerability, i.e., label = 1.
 
 
 ## Dangerous Delegatecall
+Dangerous delegatecall vulnerability is considered as using _delegate_ as part of the conditions to perform critical operations.
 
 ### How to label the dangerous delegatecall vulnerability?
-We design three xxx patterns to label the dangerous delegatecall vulnerability dataset. 
-The first sub-pattern is , 检测合约中是否存在delegatecall调用，如果存在，认定该合约满足pattern1;
-The second sub-pattern is , 如果合约中的delegatecall调用者不是合约所有者和合约所有者指定的目标地址，认定该合约满足pattern2;
-若合约满足上述2个pattern，此时，认定该合约存在委托调用漏洞（标签为1），否则，认定该合约不存在代理调用漏洞(标签为0).
-1. 是否存在delegatecall关键字的调用;  (if true -> 2 else label = 0)
-2. 判断delegatecall的调用者是否为owner所指定的目标地址;  (if false -> label=1 else label = 0)
+We design three patterns to label the dangerous delegatecall vulnerability dataset. 
+The first sub-pattern is **delegateInvocation** models whether there exists an invocation to _delegate_ in the function;
+The second sub-pattern is **targetCaller** that checks whether the caller of _delegate_ is the target address specified by owner;
+We label a function with dangerous delegatecall vulnerability as:**DelegatecallInvoc ∧ (!TargetCaller)**.
 
-### DelegatecallInvoc
-若合约中不存在delegatecall调用，则认为合约中不存在委托调用漏洞 (标签为0); 否则, 继续对该合约进行校验.
+### delegateInvocation
+Note that we treat those contracts with the key word of delegate as the research targets. As such, we design the 
+pattern **delegateInvocation** to filter those functions without the key word of _delegate_.
 
-
-### pattern 2
-case 1:当合约中存在delegate调用时，且delegate调用者是owner指定的，则认为合约中不存在委托调用漏洞 (标签为0)；否则, 继续对该合约进行校验.
+### targetCaller
+case 1: When the _delegate_ exists in the contract, and the delegate caller is specified by the owner;
+we label the corresponding function does not exist the dangerous delegatecall vulnerability.
    
    ```
    1. contract Proxy {
@@ -401,9 +386,11 @@ case 1:当合约中存在delegate调用时，且delegate调用者是owner指定�
    14. }
    ```
    
-以上述合约为例,在合约第16行存在delegate调用,调用者为callee；合约第12行setCallee函数的作用是只有owner可以指定一个地址作为callee；
-显然，该合约符合对情形2的定义，则认为该合约Proxy不存在委托调用漏洞（标签为0）。
-case2:当合约中存在delegate调用时，且delegate调用者是owner指定的，则认为合约中不存在委托调用漏洞 (标签为0)；否则, 继续对该合约进行校验.
+For instance, the _delegate_ caller is _callee_ (line 12), and _callee_ is the target address specified by owner;
+we label the corresponding function _forward_ does not exist the dangerous delegatecall vulnerability, i.e., label = 0;
+
+case2: When the _delegate_ exists in the contract, and the delegate caller is not specified by the owner;
+we label the corresponding function exists the dangerous delegatecall vulnerability. 
     
     ```
     1. contract Proxy { 
@@ -414,6 +401,5 @@ case2:当合约中存在delegate调用时，且delegate调用者是owner指定�
     6. }
     ```
     
-以上述合约为例，合约第7行出现delegatecall调用，并且调用者不是由owner所指定的目标位置；并且在调用成功后能顺利地通过条件约束，最终修改合约状态。
-显然，该合约符合对情形3的定义，则认为该合约Proxy存在委托调用漏洞（标签为1）。
-
+For instance, the _delegate_ caller is _callee_ (line 4), and _callee_ is not the target address specified by owner;
+we label the function _forward_ exists the dangerous delegatecall vulnerability, i.e., label = 1;
