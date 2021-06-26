@@ -1,5 +1,0 @@
-N1 N1 NULL NULL 1 Normal
-C1 C1 Sub N1,N4 2 Core
-N2 N2 NULL N1,C1 3 Normal
-N3 N3 NULL N2 4 Normal
-N4 N4 NULL N3,C1 5 Normal

@@ -1,3 +1,0 @@
-N1 N1 NULL NULL 1 Normal
-N2 N2 NULL N1 2 Normal
-C1 C1 SMul,SMul N2,C1,C1 3 Core

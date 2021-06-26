@@ -1,7 +1,0 @@
-N1 N1 NULL NULL 1 Normal
-N2 N2 NULL N1 2 Normal
-N3 N3 NULL N2 3 Normal
-C1 C1 SMul N3,C2,N5,N5 4 Core
-C2 C2 SAdd C1,N4,N5 5 Core
-N4 N4 NULL C2 6 Normal
-N5 N5 NULL C1,N5,C2,C1 7 Normal
