@@ -1,11 +1,11 @@
 # Smart contract vulnerability dataset
 
-**This repository releases the official smart contract dataset of our [paper](), which consists of four types of vulnerabilities. In what follows, we present the instructions of how to label the specific vulnerability.**
+**This repository releases the official smart contract dataset of our paper, which consists of four types of vulnerabilities. In what follows, we present the instructions of how to label the specific vulnerability.**
 
 
 
 ## Download Dataset
-We released the smart contract dataset that consists of four types of vulnearbilities, namely timestamp dependence, reentrancy, interger overflow/underflow, and delegatecall. You can download the original 42,907 Ethereum smart contracts at [Ethereum_smart_contract]() and four vulnearbilities at [vulnearbility_dataset]().
+We will release the smart contract dataset that consists of four types of vulnearbilities, namely timestamp dependence, reentrancy, interger overflow/underflow, and delegatecall. 
 
 
 
