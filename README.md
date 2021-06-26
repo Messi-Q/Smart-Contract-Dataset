@@ -1,33 +1,37 @@
 # Smart contract vulnerability dataset
 
-**This repository releases the official datasets for five types of smart contract vulnerabilities, and gives the instructions for how to label the these vulnerability datasets.**
+**This repository releases the official smart contract dataset of our [paper](), which consists of four types of vulnerabilities. In what follows, we present the instructions of how to label the specific vulnerability.**
+
+
+
+## Download Dataset
+We released the smart contract dataset that consists of four types of vulnearbilities, namely timestamp dependence, reentrancy, interger overflow/underflow, and delegatecall. You can download the original 42,907 Ethereum smart contracts at [Ethereum_smart_contract]() and four vulnearbilities at [vulnearbility_dataset]().
 
 
 
 ## 1 Timestamp Dependence
-Block timestamp dependence is considered as using _block.timestamp_ (or _block.number_) as part of the conditions to perform critical operations.
+Block timestamp dependence is considered as using *block.timestamp* as part of the conditions to perform critical operations.
 
 
 ### How to label the timestamp dependency vulnerability?
-We design three local patterns to label the timestamp dependence vulnerability dataset. 
-The first pattern **timestampInvocation** models whether there exists an invocation to _block.timestamp_ in the function.
-The second pattern **timestampAssign** checks whether the value of _block.timestamp_ is assigned to other variables or passed to a condition statement as a parameter, namely whether _block.timestamp_ is actually used. 
-Last, the third pattern **timestampContaminate** checks if _block.timestamp_ may contaminate the triggering condition of a critical operation (e.g., money transfer) or the return value.
-We label a function with timestamp dependence vulnerability as:**TimestampInvoc ∧ (TimestampAssign ∨ TimestampContaminate)**.
+We refer to several expert patterns to label the timestamp dependence vulnerability. 
+1) **timestampInvocation** models whether there exists an invocation to *block.timestamp* in the function. 
+2) **timestampAssign** checks whether the value of *block.timestamp* is assigned to other variables or passed to a condition statement as a parameter, namely whether *block.timestamp* is actually used. 
+3) **timestampContaminate** checks if *block.timestamp* may contaminate the triggering condition of a critical operation (e.g., money transfer) or the return value.
+We label a function with timestamp dependence vulnerability based on: **TimestampInvoc ∧ (TimestampAssign ∨ TimestampContaminate)**.
 
 
 #### timestampInvocation
 
-Note that we treat those functions with the key word of _block.timestamp_ as the research targets. As such, we utilize the pattern **timestampInvoc** to filter those functions without the key word of _block.timestamp_. 
+Note that we treat those functions with the *block.timestamp* statement as the research targets. As such, we utilize the pattern **timestampInvoc** to filter those functions without the statement of *block.timestamp*. 
 
 
 #### timestampAssign 
 
-Case 1：When the value of _block.timestamp_ is assigned to a variable and the variable is used by the following operations or 
-passed to a condition statement as a parameter, we label the corresponding function exists the timestamp dependency vulnerability.
+Case 1：When the *block.timestamp* is assigned to a variable and the variable is used by the following operations or passed to a condition statement as a parameter, we label the corresponding function existing the timestamp dependency vulnerability.
     
     ```    
-        1.contract CrowdsaleWPTByRounds{
+        1.contract CrowdsaleWPTByRounds {
         2.    uint256 public closingTime;       
         3.    function closeRound() public returns(uint256) {
         4.        closingTime = block.timestamp + 1;
@@ -36,14 +40,10 @@ passed to a condition statement as a parameter, we label the corresponding funct
         7.}
     ```
  
-For instance, the value of _block.timestamp_ is assigned to variable _closingTime_  (line 4), while the variable _closingTime_
-is called in the return statement (line 5). Therefore, we mark that the function _closeRound_ exists the 
-timestamp dependency vulnerability, i.e., label = 1.
+As can be seen, the *block.timestamp* is assigned to variable *closingTime* (line 4), and the variable *closingTime* is called in the return statement (line 5). Thus, we label the function *closeRound* existing the timestamp dependency vulnerability, i.e., label = 1.
 
 
-Case 2: When the value of _block.timestamp_ is assigned by the condition statements (e.g., _require_ and _assert_), we consider 
-that the _block.timestamp_ is constricted by the condition statements, we label the corresponding function does not exist 
-the timestamp dependency vulnerability.
+Case 2: When the *block.timestamp* is assigned in the strict condition statements (e.g., _require_ and _assert_), we label that the corresponding function does not exist the timestamp dependency vulnerability.
 
     ```    
         1.contract Safe {
@@ -59,15 +59,12 @@ the timestamp dependency vulnerability.
         11.}
     ```
     
-For instance, the value of _block.timestamp_ is assigned to variable _time_  (line 6), while the variable _time_
-is assigned in the require statement (line 7). Therefore, we mark that the function _withdrawal_ does not exist the 
-timestamp dependency vulnerability, i.e., label = 0.
+As can be seen, the *block.timestamp* is assigned to the variable *time* (line 6), and the variable *time* is assigned in the *require* statement (line 7). Thus, we label that the function *withdrawal* does not exist the timestamp dependency vulnerability, i.e., label = 0.
 
 
 #### timestampContaminate
 
-case 1：When the control content of the conditional statement(e.g. _if_ and _while_) involves the return value of the function,
-we label the corresponding function exists the timestamp dependency vulnerability.
+case 1：When the body of the conditional statement (e.g. _if_ and _while_) involves the return value of the function, we label the corresponding function existing the timestamp dependency vulnerability.
 
     ```
         1.contract CrowdsaleExt {
@@ -83,11 +80,9 @@ we label the corresponding function exists the timestamp dependency vulnerabilit
         11.}
      ``` 
        
-For instance, when the conditional statement _else if_ satisfies _block.timestamp <startsAt_(line8)_, the return value of the function _getState_ is _State.PreFunding_;
-Therefore, we mark that the function _getState_ exist the timestamp dependency vulnerability, i.e., label = 1.
+As can be seen, when the conditional statement _else if_ satisfies _block.timestamp < startsAt_ (line8), the return value of the function _getState_ is _State.PreFunding_. Thus, we label the function _getState_ existing the timestamp dependency vulnerability, i.e., label = 1.
 
-Case 2：When the control content of the conditional statement involves money operations(e.g.,_transfers_),
-we label the corresponding function exists the timestamp dependency vulnerability.
+Case 2：When the body of the conditional statement involves money operations (e.g.,_transfers_), we label the corresponding function existing the timestamp dependency vulnerability.
     
     ```
         1.contract FreezableToken {
@@ -104,11 +99,9 @@ we label the corresponding function exists the timestamp dependency vulnerabilit
     ```
     
 
-For instance, when the conditional statement _while_ satisfies _release != 0 && block.timestamp> release_(line 5), the contract executes the _call.value_ transfer operation(line 7);
-Therefore, we mark that the function _releaseAll_ exist the timestamp dependency vulnerability, i.e., label = 1.
+As can be seen, when the conditional statement _while_ satisfies _release != 0 && block.timestamp > release_ (line 5), the function executes the _call.value_ transfer operation (line 7). Thus, we label the function _releaseAll_ existing the timestamp dependency vulnerability, i.e., label = 1.
 
-Case 3：When the control content of the conditional statement don't relate with the return value of the function and money operations(e.g,transfer), 
-we label the corresponding function does not exist the timestamp dependency vulnerability.
+Case 3：When the body of the conditional statement is not related to the return value of the function or money operations (e.g., transfer), we label that the corresponding function does not exist the timestamp dependency vulnerability.
     
     ```
         1.contract BirthdayGift {
@@ -124,36 +117,35 @@ we label the corresponding function does not exist the timestamp dependency vuln
     ```
     
 
-For instance, when the conditional statement _if_ is satisfied _block.timestamp <birthday_, the function _Take_ throws an exception;
-Therefore, we mark that the function _Take_ dose not exist the timestamp dependency vulnerability, i.e., label = 0.
+As can be seen, when the conditional statement _if_ satisfies _block.timestamp < birthday_ (line 6), the function _Take_ throws an exception. Thus, we label that the function _Take_ does not exist the timestamp dependency vulnerability, i.e., label = 0.
+
+
+
 
 
 ## 2 Reentrancy
-Reentrancy vulnerability is considered as an invocation to _call.value_ that can call back to itself 
-through a chain of calls.
+Reentrancy vulnerability is considered as an invocation to _call.value_ that can call back to itself through a chain of calls.
 
 
 ### How to label the reentrancy vulnerability?
-We design four local patterns to label the reentrancy vulnerability dataset. 
-The first sub-pattern is **callValueInvocation** that checks whether there exists an invocation to call.value in the function.
-The second sub-pattern **balanceDeduction** checks whether the user balance is deducted after money transfer using _call.value_, which considers the fact that the money stealing 
+We refer to several expert patterns to label the reentrancy vulnerability. 
+1) **callValueInvocation** that checks whether there exists an invocation to call.value in the function.
+2) **balanceDeduction** checks whether the user balance is deducted after money transfer using _call.value_, which considers the fact that the money stealing 
 can be avoided if user balance is deducted each time before money transfer.
-The third sub-pattern **valueNegative** checks whether the parameter of the _call.value_ function itself is zero.
-The last sub-pattern **ModifierConstrain** checks whether the function corresponding _call.value_ is constrained by the _OnlyOwner_ modifier.
-We label a function with reentrancy vulnerability as: **callValueInvocation ∧ balanceDeduction ∧ ValueNegative ∧ (!ModifierConstrain)**.
+3) **zeroParameter** checks whether the parameter of the _call.value_ function itself is zero.
+4) **ModifierConstrain** checks whether the function is constrained by the _onlyOwner_ modifier.
+We label a function with reentrancy vulnerability based on: **callValueInvocation ∧ balanceDeduction ∧ zeroParameter ∧ (!ModifierConstrain)**.
 
 
 
 #### callValueInvocation
 
-Note that we treat those contracts with the key word of call.value as the research targets. As such, we design the 
-pattern **callValueInvocation** to filter those functions without the key word of _call.value_.
+Note that we treat those functions with an invocation to *call.value* as the research targets. As such, we utilize the pattern **callValueInvocation** to filter those functions without an invocation to _call.value_.
 
 
-#### valueNegative
+#### zeroParameter
 
-Case 1: When the _call.value_ exists in the contract, and the parameter of the call.value function is zero; 
-we label the corresponding function does not exist the reentrancy vulnerability, i.e., label = 0. Otherwise, continues to verify the function.
+Case 1: When the _call.value_ exists in the function and the parameter of the *call.value* is zero, we label that the corresponding function does not exist the reentrancy vulnerability, i.e., label = 0.
      
      ```
         1.contract HiroyukiCoinDark {
@@ -168,14 +160,12 @@ we label the corresponding function does not exist the reentrancy vulnerability,
         10.}
     ```
     
-For instance, the parameter of _call.value_ is zero(line 7); 
-Therefore, we mark that the function _transfer_ dose not exist the reentrancy vulnerability, i.e., label = 0.
+As can be seen, the parameter of _call.value_ is zero (line 7). Thus, we label that the function _transfer_ dose not exist the reentrancy vulnerability, i.e., label = 0.
 
 
 #### balanceDeduction
 
-Case 1: When the parameter of _call.value_ is not zero, the user balance is deducted before money transfer using _call.value_; 
-we label the corresponding function does not exist the reentrancy vulnerability, i.e., label = 0. Otherwise, continues to verify the function.
+Case 1: When the parameter of _call.value_ is not zero and the user balance is deducted before money transfer using _call.value_, we label that the corresponding function does not exist the reentrancy vulnerability, i.e., label = 0.
    
     ```
         1.contract NIZIGEN {
@@ -194,13 +184,11 @@ we label the corresponding function does not exist the reentrancy vulnerability,
         14.}
     ```
     
-For instance, the user balance _balances[msg.sender]_(line 6) is deducted before money transfer using _call.value_ (line 7);
-we label the corresponding function does not exist the reentrancy vulnerability, i.e., label = 0.
+As can be seen, the user balance _balances[msg.sender]_(line 6) is deducted before money transfer using _call.value_ (line 7). Thus, we label that the corresponding function does not exist the reentrancy vulnerability, i.e., label = 0.
 
 #### modifierDeclaration
 
-Case 1: When function corresponding _call.value_ has the _onlyOwner_ modifier constraint;
-we label the corresponding function does not exist the reentrancy vulnerability.
+Case 1: When a function has the _onlyOwner_ modifier constraint, we label that the corresponding function does not exist the reentrancy vulnerability.
     
     ```
         1.contract CrowdsaleWPTByRounds {
@@ -211,56 +199,52 @@ we label the corresponding function does not exist the reentrancy vulnerability.
         6.    require(msg.sender == owner);
         7.    _;
         8.  }   
-        9.  function _forwardFunds() internal onlyOwner {
+        9.  function forwardFunds() internal onlyOwner {
         10.     wallet.call.value(msg.value).gas(10000000)();
         11.     balances[wallet] -= msg.value;
         12.  }
         13.}
     ```
     
-For instance, the function __forwardFunds_ corresponding _call.value_ is constraint by the _onlyOwner_ modifier(line 9);
-we label the function __forwardFunds_ does not exist the reentrancy vulnerability, i.e., label = 0.
+As can be seen, the function _forwardFunds_ is constrained by the _onlyOwner_ modifier(line 9). Thus, we label that the function _forwardFunds_ does not exist the reentrancy vulnerability, i.e., label = 0.
 
 
-Case 2: When function corresponding _call.value_ has not the _onlyOwner_ modifier constraint;
-we label the corresponding function exists the reentrancy vulnerability.
+Case 2: When a function has not the _onlyOwner_ modifier constraint, we label the corresponding function existing the reentrancy vulnerability.
       
       ```
         1.contract CrowdsaleWPTByRounds {
         2.  mapping (address => uint) balances;
         3.  address wallet;
-        4.  function _forwardFunds() internal {
+        4.  function forwardFunds() internal {
         5.    wallet.call.value(msg.value).gas(10000000)();
         6.    balances[wallet] -= msg.value;
         7.  }
         8.}
     ```
     
-For instance, the function __forwardFunds_ corresponding _call.value_ is not constraint by the _onlyOwner_ modifier(line 9);
-we label the function __forwardFunds_ exists the reentrancy vulnerability, i.e., label = 1.
+As can be seen, the function _forwardFunds_ is not constrained by the _onlyOwner_ modifier(line 9). Thus, we label the function _forwardFunds_ existing the reentrancy vulnerability, i.e., label = 1.
+
 
 
 
 ## 3 Integer Overflow/Underflow
-Integer Overflow/Underflow is considered as using srithmetic operation (e.g. +, -, *) between variables lead to the value of variables out of range.
+Integer Overflow/Underflow is considered as using arithmetic operations *(e.g., +, -, *)* between variables, which may lead to the value of variables out of range.
 
 
 ### How to label the integer overflow/underflow vulnerability?
-We design three patterns to label the integer overflow/underflow vulnerability dataset. 
-The first sub-pattern is **arithmeticOperation** that checks whether there is arithmetic operation between variables.
-The second sub-pattern is **safeLibraryInvocation** that checks whether the arithmetic operations between variables are constraint by security library function.
-The last sub-pattern is **conditionDeclaration** that checks whether the variable for arithmetic operation is judged by the conditional statement.
-We label a function with integer overflow/underflow vulnerability as:**ArithmeticOperation ∧ (SafeLibraryInvoc ∨ ConditionDeclaration)**.
+We refer to several expert patterns to label the integer overflow/underflow vulnerability. 
+1) **arithmeticOperation** that checks whether there is arithmetic operation between variables.
+2) **safeLibraryInvocation** that checks whether the arithmetic operations between variables are constrained by a security library function.
+3) **conditionDeclaration** that checks whether the variable for the arithmetic operation is judged by the conditional statement.
+We label a function with integer overflow/underflow vulnerability based on: **ArithmeticOperation ∧ (SafeLibraryInvoc ∨ ConditionDeclaration)**.
 
 #### arithmeticOperation
-Note that we treat those contracts with the key word of arithmetic operator(e.g. +, -, *) as the research targets. As such, we design the 
-pattern **arithmeticOperation** to filter those functions without the key word of arithmetic operator.
+Note that we treat those functions with the arithmetic operations _(e.g., +, -, *)_ as the research targets. As such, we utilize the pattern **arithmeticOperation** to filter those functions without the arithmetic operations.
 
 
 #### safeLibraryInvoc
 
-Case 1: When there are arithmetic operations between the variables, and the arithmetic operations are constrainted by the security library function;
-we label the corresponding function dose not exist the Integer Overflow/Underflow vulnerability.
+Case 1: When there are arithmetic operations between the variables and the arithmetic operations are constrained by the security library function, we label that the corresponding function does not exist the Integer Overflow/Underflow vulnerability.
     
     ```
         1.library SafeMath {
@@ -277,129 +261,117 @@ we label the corresponding function dose not exist the Integer Overflow/Underflo
         12.contract StandardToken {
         13.    using SafeMath for uint256;
         14.    mapping(address => uint256) balances; 
-        15.    function transfer(address _to, uint256 _value) public returns (bool){
-        16.        balances[msg.sender] = balances[msg.sender].sub(_value);
-        17.        balances[_to] = balances[_to].add(_value);
+        15.    function transfer(address to, uint256 value) public returns (bool) {
+        16.        balances[msg.sender] = balances[msg.sender].sub(value);
+        17.        balances[to] = balances[to].add(value);
         18.        return true;
         19.    }
-        20. }
+        20.}
     ```
     
-For instance, the subtraction operation between the _balances[msg.sender]_ and the __value_ (line 16) is constrained by the security library function (line 2); 
-we label the corresponding function _transfer_ dose not exist the Integer Overflow/Underflow vulnerability, i.e., label = 0.
+As can be seen, the subtraction operation between the _balances[msg.sender]_ and the _value_ (line 16) is constrained by the security library function (line 2). Thus, we label that the corresponding function _transfer_ does not exist the Integer Overflow/Underflow vulnerability, i.e., label = 0.
 
 
 #### conditionDeclaration
 
-case 1: If there is an addition operation (or multiplication operation) between contract variables;
-When the summation and addition factor (or the product and the multiplication factor) appear in the conditional statement (e.g.assert, require, if, while) for comparison,
-and the conditional statement appears after the addition operation (or multiplication operation);
-we label the corresponding function dose not exist the Integer Overflow/Underflow vulnerability.
+case 1: When the arithmetic operations and corresponding variables appear in the strict conditional statements (e.g., assert, require), we label that the corresponding function does not exist the Integer Overflow/Underflow vulnerability.
    
     ```
-    1.contract Overflow_fixed_assert {
-    2.    uint8 sellerBalance = 0;
-    3.    function add(uint8 value) returns (uint){
-    4.        sellerBalance += value;
-    5.        assert(sellerBalance >= value);
-    6.        return sellerBalance;
-    7.    }
-    8.}
+        1.contract Overflow_fixed_assert {
+        2.    uint8 sellerBalance = 0;
+        3.    function add(uint8 value) returns (uint) {
+        4.        sellerBalance += value;
+        5.        assert(sellerBalance >= value);
+        6.        return sellerBalance;
+        7.    }
+        8.}
     ```
     
-For instance, there is an addition operation between the _sellerBalance_ and the _value_ (line 4) ,
-and _assert_ statement contains the comparison between the result of the addition operation and the factor (line 5);
-we label the corresponding function _add_ dose not exist the Integer Overflow/Underflow vulnerability, i.e., label = 0.
+As can be seen, there is an addition operation between the _sellerBalance_ and the _value_ (line 4), and _assert_ statement contains the comparison between the r_sellerBalance_ and the _value_ (line 5). Thus, we label that the corresponding function _add_ does not exist the Integer Overflow/Underflow vulnerability, i.e., label = 0.
 
-Case 2: If there is a subtraction operation between the contract variables,
-when the minute and minus appear in the conditional statement (assert, require, if, while) for comparison,
-and the conditional statement appears before the subtraction operation;
-we label the corresponding function dose not exist the Integer Overflow/Underflow vulnerability.
+Case 2: When the subtraction operation appears in the strict conditional statement (e.g., assert, require) for comparison and the conditional statement appears before the subtraction operation, we label that the corresponding function does not exist the Integer Overflow/Underflow vulnerability.
 
     ```
-    1.contract HiroyukiCoinDark {
-    2.    mapping(address => uint256) public balanceOf;
-    3.    function transfer(address _to, uint _value, bytes _data) public returns (bool) {
-    4.        require(balanceOf[msg.sender] >= _value);
-    5.        balanceOf[msg.sender] = balanceOf[msg.sender] - _value;
-    6.        balanceOf[_to] = balanceOf[_to] + _value;
-    7.        assert(msg.sender.call.value(_value)());
-    8.        return true;
-    9.    }
-    10.}
+        1.contract HiroyukiCoinDark {
+        2.    mapping(address => uint256) public balanceOf;
+        3.    function transfer(address to, uint value, bytes data) public returns (bool) {
+        4.        require(balanceOf[msg.sender] >= value);
+        5.        balanceOf[msg.sender] = balanceOf[msg.sender] - value;
+        6.        balanceOf[to] = balanceOf[_to] + value;
+        7.        assert(msg.sender.call.value(value)());
+        8.        return true;
+        9.    }
+        10.}
     ```
  
-For instance, there is a subtraction operation between the _balanceOf[msg.sender]_ and the __value_ variable (line 5),
-and require statement contains the comparison between the minute and minus of the subtraction operation (line 4);
-we label the corresponding function dose not exist the Integer Overflow/Underflow vulnerability, i.e., label = 0.
+As can be seen, there is a subtraction operation between the _balanceOf[msg.sender]_ and the _value_ (line 5), and the _require_ statement contains the comparison between the _balanceOf[msg.sender]_ and the _value_ (line 4). Thus, we label that the corresponding function dose not exist the Integer Overflow/Underflow vulnerability, i.e., label = 0.
 
 
-Case 3: If there are arithmetic operations between contract variables, when the contract does not satisfy case 1 and case 2;
-we label the corresponding function exists the Integer Overflow/Underflow vulnerability.
+Case 3: When the function does not satisfy case 1 and case 2, we label the corresponding function existing the Integer Overflow/Underflow vulnerability.
     
     ```
-    1. contract Overflow_add {
-    2.    uint8 sellerBalance = 0;
-    3.    function add(uint8 value) returns (uint){
-    4.        sellerBalance += value;
-    5.        return sellerBalance;
-    6.    }
-    7. }
+        1. contract Overflow_add {
+        2.    uint8 sellerBalance = 0;
+        3.    function add(uint8 value) returns (uint) {
+        4.        sellerBalance += value;
+        5.        return sellerBalance;
+        6.    }
+        7. }
     ```
     
-For instance, there is an addition operation between the sellerBalance and the value variable (line 4), 
-and no conditional statement to compare the two variables after the addition operation;
-we label the corresponding function _add_ exists the Integer Overflow/Underflow vulnerability, i.e., label = 1.
+As can be seen, there is an addition operation between the _sellerBalance_ and the _value_ (line 4), and no conditional statement used to constrain the two variables after the addition operation. Thus, we label the corresponding function _add_ existing the Integer Overflow/Underflow vulnerability, i.e., label = 1.
+
+
 
 
 ## 4 Dangerous Delegatecall
 Dangerous delegatecall vulnerability is considered as using _delegate_ as part of the conditions to perform critical operations.
 
 ### How to label the dangerous delegatecall vulnerability?
-We design three patterns to label the dangerous delegatecall vulnerability dataset. 
-The first sub-pattern is **delegateInvocation** models whether there exists an invocation to _delegate_ in the function;
-The second sub-pattern is **targetCaller** that checks whether the caller of _delegate_ is the target address specified by owner;
-We label a function with dangerous delegatecall vulnerability as:**DelegatecallInvoc ∧ (!TargetCaller)**.
+We refer to several expert patterns to label the dangerous delegatecall vulnerability. 
+1) **delegateInvocation** models whether there exists an invocation to _delegatecall_ in the function;
+2) **ownerInvocation** that checks whether the caller of _delegatecall_ is the owner account;
+We label a function with dangerous delegatecall vulnerability based on: **DelegatecallInvoc ∧ (!ownerInvocation)**.
 
 #### delegateInvocation
-Note that we treat those contracts with the key word of delegate as the research targets. As such, we design the 
-pattern **delegateInvocation** to filter those functions without the key word of _delegate_.
+Note that we treat those functions with the statemnet of *delegatecall* as the research targets. As such, we utilize the pattern **delegateInvocation** to filter those functions without the statemnet of *delegatecall*.
 
-#### targetCaller
-Case 1: When the _delegate_ exists in the contract, and the delegate caller is specified by the owner,
-we label the corresponding function does not exist the dangerous delegatecall vulnerability.
+#### ownerInvocation
+Case 1: When the _delegatecall_ exists in the function and the caller is the owner account, we label that the corresponding function does not exist the dangerous delegatecall vulnerability.
    
    ```
-   1. contract Proxy {
-   2.     address callee;
-   3.     address owner;
-   4.     modifier onlyOwner {
-   5.           require(msg.sender == owner);
-   6.          _;
-   7.     }
-   8.     function setCallee(address newCallee) public onlyOwner {
-   9.         callee = newCallee;
-   10.   }
-   11.   function forward(bytes _data) public {
-   12.       require(callee.delegatecall(_data));
-   13.   }
-   14. }
+       1.contract Proxy {
+       2.     address callee;
+       3.     address owner;
+       4.     modifier onlyOwner {
+       5.           require(msg.sender == owner);
+       6.          _;
+       7.     }
+       8.     function setCallee(address newCallee) public onlyOwner {
+       9.         callee = newCallee;
+       10.   }
+       11.   function forward(bytes _data) public {
+       12.       require(callee.delegatecall(_data));
+       13.   }
+       14.}
    ```
    
-For instance, the _delegate_ caller is _callee_ (line 12), and _callee_ is the target address specified by owner,
-we label the corresponding function _forward_ does not exist the dangerous delegatecall vulnerability, i.e., label = 0;
+As can be seen, the caller of _delegatecall_ is _callee_ (line 12), and _callee_ is the target address of the owner account, we thus label that the corresponding function _forward_ does not exist the dangerous delegatecall vulnerability, i.e., label = 0;
 
-Case 2: When the _delegate_ exists in the contract, and the delegate caller is not specified by the owner,
-we label the corresponding function exists the dangerous delegatecall vulnerability. 
+Case 2: When the _delegatecall_ exists in the function and the caller of _delegatecall_ is not the owner account, we label the corresponding function existing the dangerous delegatecall vulnerability. 
     
     ```
-    1. contract Proxy { 
-    2.    address owner;
-    3.    function forward(address callee, bytes _data) public {
-    4.       require(callee.delegatecall(_data));
-    5.    }
-    6. }
+        1.contract Proxy { 
+        2.    address owner;
+        3.    function forward(address callee, bytes _data) public {
+        4.       require(callee.delegatecall(_data));
+        5.    }
+        6.}
     ```
     
-For instance, the _delegate_ caller is _callee_ (line 4), and _callee_ is not the target address specified by owner,
-we label the function _forward_ exists the dangerous delegatecall vulnerability, i.e., label = 1.
+As can be seen, the caller of _delegatecall_ is _callee_ (line 4), and _callee_ is not the owner account, we thus label the function _forward_ existing the dangerous delegatecall vulnerability, i.e., label = 1.
+
+
+
+
+
