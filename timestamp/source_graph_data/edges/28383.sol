@@ -1,3 +1,0 @@
-N1 N2 1 GB
-N2 N2 2 RE
-N2 C1 3 RE

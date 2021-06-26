@@ -1,7 +1,0 @@
-N1 N1 NULL 1 Normal
-C1 C1 N1,C3 2 Core
-C2 C2 C1 3 CoreTime
-C3 C3 C2,C4 4 Core
-C4 C4 C1,C5 5 Core
-C5 C5 C3,N2 6 Core
-N2 N2 C4 7 Normal

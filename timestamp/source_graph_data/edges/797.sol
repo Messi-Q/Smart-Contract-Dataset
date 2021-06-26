@@ -1,4 +1,0 @@
-N1 C1 1 GB
-C1 C1 2 RG
-C1 C2 3 AG
-C2 C1 4 RE

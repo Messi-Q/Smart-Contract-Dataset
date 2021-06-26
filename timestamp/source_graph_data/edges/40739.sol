@@ -1,3 +1,0 @@
-N1 N2 1 RG
-N1 C1 2 RG
-C1 N3 3 RG
