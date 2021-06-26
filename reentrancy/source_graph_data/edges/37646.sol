@@ -1,3 +1,0 @@
-C1 C2 1 IT
-C2 C3 2 IT
-C3 C2 3 AC

@@ -1,3 +1,0 @@
-C1 C2 1 AH
-C2 C3 2 AC
-C3 C3 3 AG

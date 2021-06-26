@@ -1,3 +1,0 @@
-C1 N1 1 IF
-N1 C2 2 AC
-C2 C3 3 AC
