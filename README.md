@@ -9,6 +9,34 @@
 Download the benchmark dataset at [Ethereum_smart_contract](https://drive.google.com/file/d/1yFJSCiUuoiSx4uWYNcCESUvsEs5DOGM9/view?usp=sharing) and four vulnearbilities at [vulnerability_dataset](https://drive.google.com/file/d/1UhHHevE9iDmvSB_k_lhyI58KAj7hnB1o/view?usp=sharing).
 
 
+## Citation
+Please cite our papers if you want to use this dataset in your paper:
+```
+@inproceedings{zhuangsmart,
+  title={Smart Contract Vulnerability Detection using Graph Neural Network},
+  author={Zhuang, Yuan and Liu, Zhenguang and Qian, Peng and Liu, Qi and Wang, Xiang and He, Qinming},
+  booktitle={IJCAI},
+  pages={3283--3290},
+  year={2020}
+}
+
+@inproceedings{liu2021smart,
+  title={Smart Contract Vulnerability Detection: From Pure Neural Network to Interpretable Graph Feature and Expert Pattern Fusion},
+  author={Liu, Zhenguang and Qian, Peng and Wang, Xiang and Zhu, Lei and He, Qinming and Ji, Shouling},
+   booktitle={IJCAI},
+  pages={2751--2759},
+  year={2021}
+}
+
+@article{liu2021combining,
+  title={Combining Graph Neural Networks with Expert Knowledge for Smart Contract Vulnerability Detection},
+  author={Liu, Zhenguang and Qian, Peng and Wang, Xiaoyang and Zhuang, Yuan and Qiu, Lin and Wang, Xun},
+  journal={IEEE Transactions on Knowledge and Data Engineering},
+  year={2021},
+  publisher={IEEE}
+}
+``` 
+
 
 ## 1 Timestamp Dependence
 The timestamp dependence vulnerability exists when a smart contract uses the *block.timestamp* as part of the conditions to perform critical operations.
