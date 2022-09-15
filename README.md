@@ -1,7 +1,7 @@
 # Smart contract vulnerability dataset
 
 
-**This repository releases the benchmark dataset of our [paper](), which concerns four types of vulnerabilities. In what follows, we wiil present the instructions of how to label a specific vulnerability.**
+**This repository releases the benchmark dataset, which concerns four types of vulnerabilities. In what follows, we wiil present the instructions of how to label a specific vulnerability.**
 
 
 
