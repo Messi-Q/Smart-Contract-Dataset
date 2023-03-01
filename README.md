@@ -69,7 +69,7 @@ Coming soon.
 The second dataset D2 (released by [2, 3, 4]) aims to evaluate the performance of vulnerability detection tools, 
 while the purpose of the third dataset D3 (released by [5]) is to validate the effectiveness of our system in handling real-world contracts that involve large-scale transactions.
 
-- Download this resource at [Dataset](https://drive.google.com/file/d/1XFp3tZSMkWSkeLSHe_vrQjGZYZ3LzB2s/view?usp=sharing)
+- Download this resource at [Dataset](https://drive.google.com/file/d/1XFp3tZSMkWSkeLSHe_vrQjGZYZ3LzB2s/view?usp=sharing).
 
 - Please cite our paper if you want to use the dataset in your paper.
 ```
