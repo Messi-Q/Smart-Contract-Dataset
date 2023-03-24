@@ -47,7 +47,7 @@ Coming soon.
 
 
 ## Resource 3
-- This dataset contains over 12K Ethereum smart contracts and concerns eight types of vulnerabilities. 
+- This dataset contains over 12K Ethereum smart contracts (where inherited contracts are also included) and concerns eight types of vulnerabilities. 
 - Check the [pattern](https://github.com/Messi-Q/Smart-Contract-Dataset/tree/master/patterns) design for more details.
 - Download this resource at [Dataset](https://drive.google.com/file/d/1iU2J-BIstCa3ooVhXu-GljOBzWi9gVrG/view?usp=share_link). 
 
