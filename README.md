@@ -42,7 +42,19 @@
 
 Please cite our paper if you want to use the dataset in your paper.
 ```
-Coming soon.
+@inproceedings{10.1145/3543507.3583367,
+author = {Qian, Peng and Liu, Zhenguang and Yin, Yifang and He, Qinming},
+title = {Cross-Modality Mutual Learning for Enhancing Smart Contract Vulnerability Detection on Bytecode},
+year = {2023},
+isbn = {9781450394161},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+booktitle = {Proceedings of the ACM Web Conference 2023},
+pages = {2220–2229},
+numpages = {10},
+location = {Austin, TX, USA},
+series = {WWW '23}
+}
 ```
 
 
